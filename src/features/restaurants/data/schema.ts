@@ -1,4 +1,6 @@
 import { z } from 'zod'
+import { dayHoursSchema } from './hours-schema'
+import { locationSchema } from './location-schema'
 
 const restaurantStatusSchema = z.union([
   z.literal('pending'),
@@ -11,31 +13,20 @@ export type RestaurantStatus = z.infer<typeof restaurantStatusSchema>
 // ADMIN_API.md § 5). `owner_user_id` is blank until the restaurant reaches `active`
 // (the merchant redeemed their invite) — there is no owner-name/email
 // denormalization on this endpoint, unlike `/admin/reservations`'s user_name/user_email.
+// `restaurants` holds only brand-level fields — physical-site facts (address, contact,
+// rating/price/photos) live on `locations` (a restaurant can have more than one, see
+// location-schema.ts); `cuisines` and `hours` are similarly embedded from their own tables.
 const _restaurantSchema = z.object({
   restaurant_id: z.string(),
   owner_user_id: z.string(),
   name: z.string(),
   description: z.string().optional(),
   logo: z.string().optional(),
-  contact_email: z.string().optional(),
-  contact_phone: z.string().optional(),
-  hours: z.string().optional(),
+  banner: z.string().optional(),
   status: restaurantStatusSchema,
-  // Directory-import fields — populated for restaurants bulk-seeded from an external
-  // directory (see Backend/seeds/restaurants.ts), blank for merchant-onboarded ones
-  // unless backfilled. See ADMIN_API.md § 5.
-  address: z.string().optional(),
-  city: z.string().optional(),
-  cuisine: z.array(z.string()).optional(),
-  latitude: z.number().optional(),
-  longitude: z.number().optional(),
-  rating: z.number().optional(),
-  rating_count: z.number().optional(),
-  price_level: z.number().optional(),
-  price_symbol: z.string().optional(),
-  opening_hours: z.array(z.string()).optional(),
-  images: z.array(z.string()).optional(),
-  google_place_id: z.string().optional(),
+  locations: z.array(locationSchema).optional(),
+  cuisines: z.array(z.string()).optional(),
+  hours: z.array(dayHoursSchema).optional(),
 })
 export type Restaurant = z.infer<typeof _restaurantSchema>
 

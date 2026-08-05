@@ -1,6 +1,7 @@
 import {
   Clock,
   Mail,
+  MapPin,
   MoreVertical,
   Phone,
   SquarePen,
@@ -17,7 +18,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { type DayOfWeek, formatDayHours } from '@/features/restaurants/data/hours-schema'
 import { type Restaurant } from '../data/schema'
+
+// Date#getDay(): 0 = Sunday.
+const jsDayToDayOfWeek: DayOfWeek[] = [
+  'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday',
+]
 
 const statusStyles: Record<Restaurant['status'], string> = {
   pending:
@@ -29,11 +36,14 @@ const statusStyles: Record<Restaurant['status'], string> = {
 type RestaurantProfilePreviewProps = {
   restaurant: Restaurant
   onEdit: () => void
+  onEditHours: () => void
+  onEditLocation: () => void
 }
 
 // Read-only storefront-style header — the counterpart to the always-editable
 // form this page used to render. Edit opens `RestaurantEditDialog` instead.
-export function RestaurantProfilePreview({ restaurant, onEdit }: RestaurantProfilePreviewProps) {
+export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEditLocation }: RestaurantProfilePreviewProps) {
+  const today = restaurant.hours.find((d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()])
   return (
     <Card className='overflow-hidden py-0'>
       <div className='relative h-36 w-full bg-gradient-to-br from-teal-100 to-emerald-50 sm:h-52 dark:from-teal-950 dark:to-emerald-950'>
@@ -58,6 +68,12 @@ export function RestaurantProfilePreview({ restaurant, onEdit }: RestaurantProfi
           <DropdownMenuContent align='end'>
             <DropdownMenuItem onClick={onEdit}>
               <SquarePen /> Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onEditHours}>
+              <Clock /> Edit hours
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onEditLocation}>
+              <MapPin /> Edit location
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -89,20 +105,20 @@ export function RestaurantProfilePreview({ restaurant, onEdit }: RestaurantProfi
           )}
 
           <div className='flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:gap-6'>
-            {restaurant.contact_email && (
+            {restaurant.location?.contact_email && (
               <span className='flex items-center gap-2 text-muted-foreground'>
-                <Mail className='size-4' /> {restaurant.contact_email}
+                <Mail className='size-4' /> {restaurant.location.contact_email}
               </span>
             )}
-            {restaurant.contact_phone && (
+            {restaurant.location?.contact_phone && (
               <span className='flex items-center gap-2 text-muted-foreground'>
-                <Phone className='size-4' /> {restaurant.contact_phone}
+                <Phone className='size-4' /> {restaurant.location.contact_phone}
               </span>
             )}
-            {restaurant.hours && (
-              <span className='flex items-start gap-2 whitespace-pre-line text-muted-foreground'>
+            {today && (
+              <span className='flex items-start gap-2 text-muted-foreground'>
                 <Clock className='size-4 shrink-0 translate-y-0.5' />{' '}
-                {restaurant.hours}
+                Today: {formatDayHours(today)}
               </span>
             )}
           </div>

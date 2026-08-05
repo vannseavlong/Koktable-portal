@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { DataTableColumnHeader } from '@/components/data-table'
 import { LongText } from '@/components/long-text'
 import { statusLabels, statusStyles } from '../data/data'
+import { primaryLocation } from '../data/location-schema'
 import { type Restaurant } from '../data/schema'
 import { DataTableRowActions } from './data-table-row-actions'
 
@@ -19,22 +20,24 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'city',
+    id: 'city',
+    accessorFn: (row) => primaryLocation(row.locations)?.city ?? '',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='City' />
     ),
-    cell: ({ row }) => (
-      <span className='text-nowrap'>{row.getValue('city') || '—'}</span>
+    cell: ({ getValue }) => (
+      <span className='text-nowrap'>{(getValue() as string) || '—'}</span>
     ),
     filterFn: (row, id, value) => value.includes(row.getValue(id)),
   },
   {
-    accessorKey: 'cuisine',
+    id: 'cuisine',
+    accessorFn: (row) => row.cuisines ?? [],
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Cuisine' />
     ),
     cell: ({ row }) => {
-      const cuisine = row.original.cuisine ?? []
+      const cuisine = row.original.cuisines ?? []
       if (cuisine.length === 0) return <span className='text-muted-foreground'>—</span>
       return (
         <div className='flex max-w-48 flex-wrap gap-1'>
@@ -54,18 +57,18 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
   },
   {
     id: 'rating',
-    accessorFn: (row) => row.rating ?? 0,
+    accessorFn: (row) => primaryLocation(row.locations)?.rating ?? 0,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Rating' />
     ),
     cell: ({ row }) => {
-      const { rating, rating_count } = row.original
-      if (rating == null) return <span className='text-muted-foreground'>—</span>
+      const location = primaryLocation(row.original.locations)
+      if (location?.rating == null) return <span className='text-muted-foreground'>—</span>
       return (
         <div className='text-nowrap'>
-          <span>★ {rating.toFixed(1)}</span>
-          {rating_count != null && (
-            <span className='text-xs text-muted-foreground'> ({rating_count})</span>
+          <span>★ {location.rating.toFixed(1)}</span>
+          {location.rating_count != null && (
+            <span className='text-xs text-muted-foreground'> ({location.rating_count})</span>
           )}
         </div>
       )
@@ -73,31 +76,36 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
   },
   {
     id: 'price',
-    accessorFn: (row) => row.price_level ?? 0,
+    accessorFn: (row) => primaryLocation(row.locations)?.price_level ?? 0,
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Price' />
     ),
     cell: ({ row }) => (
-      <span className='text-nowrap'>{row.original.price_symbol || '—'}</span>
+      <span className='text-nowrap'>{primaryLocation(row.original.locations)?.price_symbol || '—'}</span>
     ),
   },
   {
     id: 'contact',
-    accessorFn: (row) =>
-      `${row.contact_email ?? ''} ${row.contact_phone ?? ''}`,
+    accessorFn: (row) => {
+      const location = primaryLocation(row.locations)
+      return `${location?.contact_email ?? ''} ${location?.contact_phone ?? ''}`
+    },
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Contact' />
     ),
-    cell: ({ row }) => (
-      <div className='flex flex-col'>
-        <span>{row.original.contact_email || '—'}</span>
-        {row.original.contact_phone && (
-          <span className='text-xs text-muted-foreground'>
-            {row.original.contact_phone}
-          </span>
-        )}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const location = primaryLocation(row.original.locations)
+      return (
+        <div className='flex flex-col'>
+          <span>{location?.contact_email || '—'}</span>
+          {location?.contact_phone && (
+            <span className='text-xs text-muted-foreground'>
+              {location.contact_phone}
+            </span>
+          )}
+        </div>
+      )
+    },
     enableSorting: false,
   },
   {

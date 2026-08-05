@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
 import { statusOptions } from '../data/data'
+import { primaryLocation } from '../data/location-schema'
 import { type Restaurant } from '../data/schema'
 import { restaurantsColumns as columns } from './restaurants-columns'
 
@@ -57,14 +58,16 @@ export function RestaurantsTable({ data, search, navigate }: DataTableProps) {
   })
 
   const cityOptions = useMemo(() => {
-    const cities = new Set(data.map((r) => r.city).filter((c): c is string => !!c))
+    const cities = new Set(
+      data.map((r) => primaryLocation(r.locations)?.city).filter((c): c is string => !!c)
+    )
     return Array.from(cities)
       .sort()
       .map((city) => ({ label: city, value: city }))
   }, [data])
 
   const cuisineOptions = useMemo(() => {
-    const cuisines = new Set(data.flatMap((r) => r.cuisine ?? []))
+    const cuisines = new Set(data.flatMap((r) => r.cuisines ?? []))
     return Array.from(cuisines)
       .sort()
       .map((cuisine) => ({ label: cuisine, value: cuisine }))
@@ -85,12 +88,13 @@ export function RestaurantsTable({ data, search, navigate }: DataTableProps) {
       const term = filterValue.trim().toLowerCase()
       if (!term) return true
       const restaurant = row.original as Restaurant
+      const location = primaryLocation(restaurant.locations)
       return (
         restaurant.name.toLowerCase().includes(term) ||
-        (restaurant.contact_email ?? '').toLowerCase().includes(term) ||
+        (location?.contact_email ?? '').toLowerCase().includes(term) ||
         restaurant.owner_user_id.toLowerCase().includes(term) ||
-        (restaurant.address ?? '').toLowerCase().includes(term) ||
-        (restaurant.city ?? '').toLowerCase().includes(term)
+        (location?.address ?? '').toLowerCase().includes(term) ||
+        (location?.city ?? '').toLowerCase().includes(term)
       )
     },
     onPaginationChange,

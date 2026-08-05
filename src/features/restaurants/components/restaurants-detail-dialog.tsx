@@ -10,6 +10,8 @@ import {
 } from '@/components/ui/dialog'
 import { statusLabels, statusStyles } from '../data/data'
 import { type Restaurant } from '../data/schema'
+import { dayLabel, formatDayHours } from '../data/hours-schema'
+import { primaryLocation } from '../data/location-schema'
 
 type RestaurantsDetailDialogProps = {
   open: boolean
@@ -31,6 +33,8 @@ export function RestaurantsDetailDialog({
   onOpenChange,
   currentRow,
 }: RestaurantsDetailDialogProps) {
+  const location = primaryLocation(currentRow.locations)
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className='sm:max-w-lg'>
@@ -55,20 +59,20 @@ export function RestaurantsDetailDialog({
             <Field label='Description' value={currentRow.description || '—'} />
             <Field
               label='Contact email'
-              value={currentRow.contact_email || '—'}
+              value={location?.contact_email || '—'}
             />
             <Field
               label='Contact phone'
-              value={currentRow.contact_phone || '—'}
+              value={location?.contact_phone || '—'}
             />
-            <Field label='Address' value={currentRow.address || '—'} />
-            <Field label='City' value={currentRow.city || '—'} />
+            <Field label='Address' value={location?.address || '—'} />
+            <Field label='City' value={location?.city || '—'} />
             <Field
               label='Cuisine'
               value={
-                currentRow.cuisine && currentRow.cuisine.length > 0 ? (
+                currentRow.cuisines && currentRow.cuisines.length > 0 ? (
                   <div className='flex flex-wrap gap-1'>
-                    {currentRow.cuisine.map((c) => (
+                    {currentRow.cuisines.map((c) => (
                       <Badge key={c} variant='secondary' className='font-normal'>
                         {c}
                       </Badge>
@@ -82,27 +86,29 @@ export function RestaurantsDetailDialog({
             <Field
               label='Rating'
               value={
-                currentRow.rating != null
-                  ? `★ ${currentRow.rating.toFixed(1)}${
-                      currentRow.rating_count != null
-                        ? ` (${currentRow.rating_count} reviews)`
+                location?.rating != null
+                  ? `★ ${location.rating.toFixed(1)}${
+                      location.rating_count != null
+                        ? ` (${location.rating_count} reviews)`
                         : ''
                     }`
                   : '—'
               }
             />
-            <Field label='Price' value={currentRow.price_symbol || '—'} />
+            <Field label='Price' value={location?.price_symbol || '—'} />
             <Field
-              label='Opening hours'
+              label='Hours'
               value={
-                currentRow.opening_hours && currentRow.opening_hours.length > 0 ? (
+                currentRow.hours && currentRow.hours.length > 0 ? (
                   <div className='flex flex-col'>
-                    {currentRow.opening_hours.map((line) => (
-                      <span key={line}>{line}</span>
+                    {currentRow.hours.map((day) => (
+                      <span key={day.day_of_week}>
+                        {dayLabel(day.day_of_week)}: {formatDayHours(day)}
+                      </span>
                     ))}
                   </div>
                 ) : (
-                  currentRow.hours || '—'
+                  '—'
                 )
               }
             />

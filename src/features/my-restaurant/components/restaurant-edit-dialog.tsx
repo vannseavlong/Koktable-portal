@@ -41,9 +41,6 @@ import { updateMyRestaurant, type RestaurantUpdatePayload } from '../data/restau
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required.'),
   description: z.string().optional(),
-  contact_email: z.email('Enter a valid email.').optional().or(z.literal('')),
-  contact_phone: z.string().optional(),
-  hours: z.string().optional(),
   category_id: z.string().optional(),
 })
 type RestaurantFormValues = z.infer<typeof formSchema>
@@ -55,9 +52,6 @@ function toFormValues(restaurant: Restaurant): RestaurantFormValues {
   return {
     name: restaurant.name,
     description: restaurant.description ?? '',
-    contact_email: restaurant.contact_email ?? '',
-    contact_phone: restaurant.contact_phone ?? '',
-    hours: restaurant.hours ?? '',
     category_id: restaurant.category_id ?? '',
   }
 }
@@ -266,58 +260,6 @@ export function RestaurantEditDialog({
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <div className='grid gap-4 sm:grid-cols-2'>
-                <FormField
-                  control={form.control}
-                  name='contact_email'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type='email'
-                          placeholder='sam@whiskersandwags.example'
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name='contact_phone'
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Contact phone</FormLabel>
-                      <FormControl>
-                        <Input placeholder='+1 555 0100' {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <FormField
-                control={form.control}
-                name='hours'
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Hours</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder='Mon-Fri 9am-6pm'
-                        className='resize-none'
-                        {...field}
-                      />
-                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

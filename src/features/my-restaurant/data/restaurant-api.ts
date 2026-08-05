@@ -51,3 +51,10 @@ export function updateMyRestaurantLocation(payload: LocationUpdatePayload) {
 export function updateMyRestaurantHours(days: DayHours[]) {
   return apiClient.put<{ hours: DayHours[] }>('/merchant/restaurant/hours', { days })
 }
+
+// `PUT /merchant/restaurant/cuisines` replaces the full set — mirrors the hours
+// endpoint's replace-all semantics. Body takes cuisine *names* (not ids), matching
+// `restaurantCuisines.service.ts`'s `setForRestaurant(restaurantId, cuisineNames)`.
+export function updateMyRestaurantCuisines(cuisines: string[]) {
+  return apiClient.put<{ cuisines: string[] }>('/merchant/restaurant/cuisines', { cuisines })
+}

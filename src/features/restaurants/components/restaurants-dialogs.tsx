@@ -1,3 +1,4 @@
+import { RestaurantLocationsDialog } from './restaurant-locations-dialog'
 import { RestaurantsDetailDialog } from './restaurants-detail-dialog'
 import { useRestaurants } from './restaurants-provider'
 import { RestaurantsStatusDialog } from './restaurants-status-dialog'
@@ -14,6 +15,16 @@ export function RestaurantsDialogs() {
         open={open === 'detail'}
         onOpenChange={() => {
           setOpen('detail')
+          setTimeout(() => setCurrentRow(null), 500)
+        }}
+        currentRow={currentRow}
+      />
+
+      <RestaurantLocationsDialog
+        key={`restaurant-locations-${currentRow.restaurant_id}`}
+        open={open === 'locations'}
+        onOpenChange={() => {
+          setOpen('locations')
           setTimeout(() => setCurrentRow(null), 500)
         }}
         currentRow={currentRow}

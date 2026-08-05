@@ -6,6 +6,7 @@ import {
   Phone,
   SquarePen,
   Store,
+  Utensils,
 } from 'lucide-react'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -38,11 +39,12 @@ type RestaurantProfilePreviewProps = {
   onEdit: () => void
   onEditHours: () => void
   onEditLocation: () => void
+  onEditCuisines: () => void
 }
 
 // Read-only storefront-style header — the counterpart to the always-editable
 // form this page used to render. Edit opens `RestaurantEditDialog` instead.
-export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEditLocation }: RestaurantProfilePreviewProps) {
+export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEditLocation, onEditCuisines }: RestaurantProfilePreviewProps) {
   const today = restaurant.hours.find((d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()])
   return (
     <Card className='overflow-hidden py-0'>
@@ -74,6 +76,9 @@ export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEd
             </DropdownMenuItem>
             <DropdownMenuItem onClick={onEditLocation}>
               <MapPin /> Edit location
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={onEditCuisines}>
+              <Utensils /> Edit cuisines
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

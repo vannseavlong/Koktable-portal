@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useDialogState from '@/hooks/use-dialog-state'
 import { type Restaurant, type RestaurantStatus } from '../data/schema'
 
-type RestaurantsDialogType = 'detail' | 'status'
+type RestaurantsDialogType = 'detail' | 'status' | 'locations'
 
 type RestaurantsContextType = {
   open: RestaurantsDialogType | null

@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { dayHoursSchema } from './hours-schema'
 import { locationSchema } from './location-schema'
 
 const restaurantStatusSchema = z.union([
@@ -15,7 +14,9 @@ export type RestaurantStatus = z.infer<typeof restaurantStatusSchema>
 // denormalization on this endpoint, unlike `/admin/reservations`'s user_name/user_email.
 // `restaurants` holds only brand-level fields — physical-site facts (address, contact,
 // rating/price/photos) live on `locations` (a restaurant can have more than one, see
-// location-schema.ts); `cuisines` and `hours` are similarly embedded from their own tables.
+// location-schema.ts); `cuisines` is similarly embedded from its own table. `hours` is
+// NOT embedded here — `restaurant_hours` is keyed to `location_id`, so each entry in
+// `locations` carries its own `hours` (see location-schema.ts).
 const _restaurantSchema = z.object({
   restaurant_id: z.string(),
   owner_user_id: z.string(),
@@ -26,7 +27,6 @@ const _restaurantSchema = z.object({
   status: restaurantStatusSchema,
   locations: z.array(locationSchema).optional(),
   cuisines: z.array(z.string()).optional(),
-  hours: z.array(dayHoursSchema).optional(),
 })
 export type Restaurant = z.infer<typeof _restaurantSchema>
 

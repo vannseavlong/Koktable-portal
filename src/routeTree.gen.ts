@@ -28,6 +28,7 @@ import { Route as AuthenticatedMyProductsIndexRouteImport } from './routes/_auth
 import { Route as AuthenticatedMyOrdersIndexRouteImport } from './routes/_authenticated/my-orders/index'
 import { Route as AuthenticatedMyCatalogIndexRouteImport } from './routes/_authenticated/my-catalog/index'
 import { Route as AuthenticatedMerchantApplicationsIndexRouteImport } from './routes/_authenticated/merchant-applications/index'
+import { Route as AuthenticatedCuisinesIndexRouteImport } from './routes/_authenticated/cuisines/index'
 import { Route as AuthenticatedContentIndexRouteImport } from './routes/_authenticated/content/index'
 import { Route as AuthenticatedCategoriesIndexRouteImport } from './routes/_authenticated/categories/index'
 import { Route as AuthenticatedSettingsNotificationsRouteImport } from './routes/_authenticated/settings/notifications'
@@ -140,6 +141,12 @@ const AuthenticatedMerchantApplicationsIndexRoute =
     path: '/merchant-applications/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCuisinesIndexRoute =
+  AuthenticatedCuisinesIndexRouteImport.update({
+    id: '/cuisines/',
+    path: '/cuisines/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedContentIndexRoute =
   AuthenticatedContentIndexRouteImport.update({
     id: '/content/',
@@ -206,6 +213,7 @@ export interface FileRoutesByFullPath {
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/categories/': typeof AuthenticatedCategoriesIndexRoute
   '/content/': typeof AuthenticatedContentIndexRoute
+  '/cuisines/': typeof AuthenticatedCuisinesIndexRoute
   '/merchant-applications/': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/my-catalog/': typeof AuthenticatedMyCatalogIndexRoute
   '/my-orders/': typeof AuthenticatedMyOrdersIndexRoute
@@ -233,6 +241,7 @@ export interface FileRoutesByTo {
   '/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/categories': typeof AuthenticatedCategoriesIndexRoute
   '/content': typeof AuthenticatedContentIndexRoute
+  '/cuisines': typeof AuthenticatedCuisinesIndexRoute
   '/merchant-applications': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/my-catalog': typeof AuthenticatedMyCatalogIndexRoute
   '/my-orders': typeof AuthenticatedMyOrdersIndexRoute
@@ -263,6 +272,7 @@ export interface FileRoutesById {
   '/_authenticated/settings/notifications': typeof AuthenticatedSettingsNotificationsRoute
   '/_authenticated/categories/': typeof AuthenticatedCategoriesIndexRoute
   '/_authenticated/content/': typeof AuthenticatedContentIndexRoute
+  '/_authenticated/cuisines/': typeof AuthenticatedCuisinesIndexRoute
   '/_authenticated/merchant-applications/': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/_authenticated/my-catalog/': typeof AuthenticatedMyCatalogIndexRoute
   '/_authenticated/my-orders/': typeof AuthenticatedMyOrdersIndexRoute
@@ -293,6 +303,7 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/categories/'
     | '/content/'
+    | '/cuisines/'
     | '/merchant-applications/'
     | '/my-catalog/'
     | '/my-orders/'
@@ -320,6 +331,7 @@ export interface FileRouteTypes {
     | '/settings/notifications'
     | '/categories'
     | '/content'
+    | '/cuisines'
     | '/merchant-applications'
     | '/my-catalog'
     | '/my-orders'
@@ -349,6 +361,7 @@ export interface FileRouteTypes {
     | '/_authenticated/settings/notifications'
     | '/_authenticated/categories/'
     | '/_authenticated/content/'
+    | '/_authenticated/cuisines/'
     | '/_authenticated/merchant-applications/'
     | '/_authenticated/my-catalog/'
     | '/_authenticated/my-orders/'
@@ -507,6 +520,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMerchantApplicationsIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/cuisines/': {
+      id: '/_authenticated/cuisines/'
+      path: '/cuisines'
+      fullPath: '/cuisines/'
+      preLoaderRoute: typeof AuthenticatedCuisinesIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/content/': {
       id: '/_authenticated/content/'
       path: '/content'
@@ -595,6 +615,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedErrorsErrorRoute: typeof AuthenticatedErrorsErrorRoute
   AuthenticatedCategoriesIndexRoute: typeof AuthenticatedCategoriesIndexRoute
   AuthenticatedContentIndexRoute: typeof AuthenticatedContentIndexRoute
+  AuthenticatedCuisinesIndexRoute: typeof AuthenticatedCuisinesIndexRoute
   AuthenticatedMerchantApplicationsIndexRoute: typeof AuthenticatedMerchantApplicationsIndexRoute
   AuthenticatedMyCatalogIndexRoute: typeof AuthenticatedMyCatalogIndexRoute
   AuthenticatedMyOrdersIndexRoute: typeof AuthenticatedMyOrdersIndexRoute
@@ -611,6 +632,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedErrorsErrorRoute: AuthenticatedErrorsErrorRoute,
   AuthenticatedCategoriesIndexRoute: AuthenticatedCategoriesIndexRoute,
   AuthenticatedContentIndexRoute: AuthenticatedContentIndexRoute,
+  AuthenticatedCuisinesIndexRoute: AuthenticatedCuisinesIndexRoute,
   AuthenticatedMerchantApplicationsIndexRoute:
     AuthenticatedMerchantApplicationsIndexRoute,
   AuthenticatedMyCatalogIndexRoute: AuthenticatedMyCatalogIndexRoute,

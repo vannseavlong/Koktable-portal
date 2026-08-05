@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Dialog,
@@ -10,8 +11,8 @@ import {
 } from '@/components/ui/dialog'
 import { statusLabels, statusStyles } from '../data/data'
 import { type Restaurant } from '../data/schema'
-import { dayLabel, formatDayHours } from '../data/hours-schema'
 import { primaryLocation } from '../data/location-schema'
+import { useRestaurants } from './restaurants-provider'
 
 type RestaurantsDetailDialogProps = {
   open: boolean
@@ -33,7 +34,11 @@ export function RestaurantsDetailDialog({
   onOpenChange,
   currentRow,
 }: RestaurantsDetailDialogProps) {
+  const { setOpen } = useRestaurants()
+  // Only used for a quick top-of-dialog glance (contact info moved to the dedicated
+  // locations dialog below, to avoid two competing single-location displays).
   const location = primaryLocation(currentRow.locations)
+  const locationCount = currentRow.locations?.length ?? 0
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -58,16 +63,6 @@ export function RestaurantsDetailDialog({
             />
             <Field label='Description' value={currentRow.description || '—'} />
             <Field
-              label='Contact email'
-              value={location?.contact_email || '—'}
-            />
-            <Field
-              label='Contact phone'
-              value={location?.contact_phone || '—'}
-            />
-            <Field label='Address' value={location?.address || '—'} />
-            <Field label='City' value={location?.city || '—'} />
-            <Field
               label='Cuisine'
               value={
                 currentRow.cuisines && currentRow.cuisines.length > 0 ? (
@@ -83,33 +78,27 @@ export function RestaurantsDetailDialog({
                 )
               }
             />
+            {/* Full per-location detail (address, contact, rating, price, hours) lives
+                in the dedicated locations dialog now that a restaurant can have more
+                than one location — this is a summary + entry point, not a second
+                competing single-location display. */}
             <Field
-              label='Rating'
+              label='Locations'
               value={
-                location?.rating != null
-                  ? `★ ${location.rating.toFixed(1)}${
-                      location.rating_count != null
-                        ? ` (${location.rating_count} reviews)`
-                        : ''
-                    }`
-                  : '—'
-              }
-            />
-            <Field label='Price' value={location?.price_symbol || '—'} />
-            <Field
-              label='Hours'
-              value={
-                currentRow.hours && currentRow.hours.length > 0 ? (
-                  <div className='flex flex-col'>
-                    {currentRow.hours.map((day) => (
-                      <span key={day.day_of_week}>
-                        {dayLabel(day.day_of_week)}: {formatDayHours(day)}
-                      </span>
-                    ))}
-                  </div>
-                ) : (
-                  '—'
-                )
+                <div className='flex flex-wrap items-center gap-3'>
+                  <span>
+                    {locationCount} location{locationCount === 1 ? '' : 's'}
+                    {location?.city ? ` · ${location.city}` : ''}
+                  </span>
+                  <Button
+                    type='button'
+                    variant='outline'
+                    size='sm'
+                    onClick={() => setOpen('locations')}
+                  >
+                    Manage locations
+                  </Button>
+                </div>
               }
             />
           </dl>

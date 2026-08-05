@@ -12,6 +12,7 @@ import {
   Palette,
   Settings,
   UserCog,
+  Utensils,
   Wrench,
   Command,
 } from 'lucide-react'
@@ -96,6 +97,11 @@ const adminSidebarData: SidebarData = {
           title: 'Categories',
           url: '/categories',
           icon: Tag,
+        },
+        {
+          title: 'Cuisines',
+          url: '/cuisines',
+          icon: Utensils,
         },
         {
           title: 'Users',

@@ -8,7 +8,7 @@ const applicationStatusSchema = z.union([
 export type ApplicationStatus = z.infer<typeof applicationStatusSchema>
 
 // Matches `schemas/admin/merchant_applications.ts` / `GET /admin/merchant-applications`
-// in paw_sheetDB (see ADMIN_API.md § 4). `_created_at` comes from the table's
+// in Backend (see ADMIN_API.md § 4). `_created_at` comes from the table's
 // `timestamps: true` and is returned verbatim on every row.
 const _merchantApplicationSchema = z.object({
   application_id: z.string(),

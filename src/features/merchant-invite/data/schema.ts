@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-// Matches `GET /merchant/invite/:token` in paw_sheetDB (see ADMIN_API.md § 7).
+// Matches `GET /merchant/invite/:token` in Backend (see ADMIN_API.md § 7).
 export const merchantInviteInfoSchema = z.object({
   restaurant: z.object({
     name: z.string(),

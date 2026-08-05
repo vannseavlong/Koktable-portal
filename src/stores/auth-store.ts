@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 import { getCookie, setCookie, removeCookie } from '@/lib/cookies'
 
-const ACCESS_TOKEN_COOKIE = 'paw_admin_access_token'
-const USER_COOKIE = 'paw_admin_user'
+const ACCESS_TOKEN_COOKIE = 'KokTable_admin_access_token'
+const USER_COOKIE = 'KokTable_admin_user'
 
 /**
  * Shape of the `user` object returned by `POST /user/auth/login` (see

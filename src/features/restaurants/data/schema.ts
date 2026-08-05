@@ -8,15 +8,6 @@ const restaurantStatusSchema = z.union([
 ])
 export type RestaurantStatus = z.infer<typeof restaurantStatusSchema>
 
-// Matches `schemas/admin/restaurants.ts` / `GET /admin/restaurants` in paw_sheetDB (see
-// ADMIN_API.md § 5). `owner_user_id` is blank until the restaurant reaches `active`
-// (the merchant redeemed their invite) — there is no owner-name/email
-// denormalization on this endpoint, unlike `/admin/reservations`'s user_name/user_email.
-// `restaurants` holds only brand-level fields — physical-site facts (address, contact,
-// rating/price/photos) live on `locations` (a restaurant can have more than one, see
-// location-schema.ts); `cuisines` is similarly embedded from its own table. `hours` is
-// NOT embedded here — `restaurant_hours` is keyed to `location_id`, so each entry in
-// `locations` carries its own `hours` (see location-schema.ts).
 const _restaurantSchema = z.object({
   restaurant_id: z.string(),
   owner_user_id: z.string(),

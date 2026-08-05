@@ -29,7 +29,7 @@ pnpm install
 pnpm dev
 ```
 
-Requires the `paw_sheetDB` API running locally (`cd ../paw_sheetDB && pnpm dev`)
+Requires the `Backend` API running locally (`cd ../Backend && pnpm dev`)
 and an admin account — see that repo's `ADMIN_API.md` for how to seed one.
 
 ## License

@@ -2,7 +2,7 @@
 
 Implementation checklist for two merchant-portal improvements. See the design
 rationale in the approved plan (context recap below); this file tracks execution
-status. Spans two repos: `paw_sheetDB` (backend) and `admin_portal` (this repo).
+status. Spans two repos: `Backend` (backend) and `admin_portal` (this repo).
 
 ## Context
 
@@ -25,7 +25,7 @@ store browsing; broadening the `item_type` enum; admin-side (`/admin/*`) UI.
 
 ---
 
-## Backend (`paw_sheetDB`)
+## Backend (`Backend`)
 
 ### Shared image upload infra
 - [x] Add `multer` + `@types/multer` deps
@@ -127,7 +127,7 @@ store browsing; broadening the `item_type` enum; admin-side (`/admin/*`) UI.
 ---
 
 ## Verification
-- [x] `paw_sheetDB`: `pnpm build && pnpm test` (105/105 passing)
+- [x] `Backend`: `pnpm build && pnpm test` (105/105 passing)
 - [x] `admin_portal`: `pnpm build && pnpm lint` (clean; pre-existing
       `__root.tsx` fast-refresh warning is unrelated)
 - [ ] Manual click-through (after gated `db:sync` go-ahead): shop logo/banner

@@ -48,7 +48,7 @@ export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEd
   const today = restaurant.hours.find((d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()])
   return (
     <Card className='overflow-hidden py-0'>
-      <div className='relative h-36 w-full bg-gradient-to-br from-teal-100 to-emerald-50 sm:h-52 dark:from-teal-950 dark:to-emerald-950'>
+      <div className='relative h-36 w-full bg-linear-to-br from-teal-100 to-emerald-50 sm:h-52 dark:from-teal-950 dark:to-emerald-950'>
         {restaurant.banner && (
           <img
             src={toDisplayImageUrl(restaurant.banner)}

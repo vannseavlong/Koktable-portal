@@ -1,5 +1,6 @@
 import {
   LayoutDashboard,
+  LayoutGrid,
   ClipboardList,
   ClipboardCheck,
   Package,
@@ -156,6 +157,11 @@ const merchantSidebarData: SidebarData = {
           title: 'My Products',
           url: '/my-products',
           icon: Package,
+        },
+        {
+          title: 'Floor Plan',
+          url: '/my-floor-plan',
+          icon: LayoutGrid,
         },
         {
           title: 'My Orders',

@@ -1,6 +1,6 @@
 import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Row } from '@tanstack/react-table'
-import { Eye, MapPin } from 'lucide-react'
+import { Eye, LayoutGrid, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -51,6 +51,15 @@ export function DataTableRowActions({ row }: DataTableRowActionsProps) {
         >
           Manage locations
           <MapPin className='ms-auto size-4' />
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            setCurrentRow(restaurant)
+            setOpen('floor-plan')
+          }}
+        >
+          Floor plan
+          <LayoutGrid className='ms-auto size-4' />
         </DropdownMenuItem>
         {transitions.length > 0 && <DropdownMenuSeparator />}
         {transitions.map((status) => (

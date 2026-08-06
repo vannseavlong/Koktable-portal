@@ -26,6 +26,7 @@ import { Route as AuthenticatedOrdersIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedMyRestaurantIndexRouteImport } from './routes/_authenticated/my-restaurant/index'
 import { Route as AuthenticatedMyProductsIndexRouteImport } from './routes/_authenticated/my-products/index'
 import { Route as AuthenticatedMyOrdersIndexRouteImport } from './routes/_authenticated/my-orders/index'
+import { Route as AuthenticatedMyFloorPlanIndexRouteImport } from './routes/_authenticated/my-floor-plan/index'
 import { Route as AuthenticatedMyCatalogIndexRouteImport } from './routes/_authenticated/my-catalog/index'
 import { Route as AuthenticatedMerchantApplicationsIndexRouteImport } from './routes/_authenticated/merchant-applications/index'
 import { Route as AuthenticatedCuisinesIndexRouteImport } from './routes/_authenticated/cuisines/index'
@@ -129,6 +130,12 @@ const AuthenticatedMyOrdersIndexRoute =
     path: '/my-orders/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedMyFloorPlanIndexRoute =
+  AuthenticatedMyFloorPlanIndexRouteImport.update({
+    id: '/my-floor-plan/',
+    path: '/my-floor-plan/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedMyCatalogIndexRoute =
   AuthenticatedMyCatalogIndexRouteImport.update({
     id: '/my-catalog/',
@@ -216,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/cuisines/': typeof AuthenticatedCuisinesIndexRoute
   '/merchant-applications/': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/my-catalog/': typeof AuthenticatedMyCatalogIndexRoute
+  '/my-floor-plan/': typeof AuthenticatedMyFloorPlanIndexRoute
   '/my-orders/': typeof AuthenticatedMyOrdersIndexRoute
   '/my-products/': typeof AuthenticatedMyProductsIndexRoute
   '/my-restaurant/': typeof AuthenticatedMyRestaurantIndexRoute
@@ -244,6 +252,7 @@ export interface FileRoutesByTo {
   '/cuisines': typeof AuthenticatedCuisinesIndexRoute
   '/merchant-applications': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/my-catalog': typeof AuthenticatedMyCatalogIndexRoute
+  '/my-floor-plan': typeof AuthenticatedMyFloorPlanIndexRoute
   '/my-orders': typeof AuthenticatedMyOrdersIndexRoute
   '/my-products': typeof AuthenticatedMyProductsIndexRoute
   '/my-restaurant': typeof AuthenticatedMyRestaurantIndexRoute
@@ -275,6 +284,7 @@ export interface FileRoutesById {
   '/_authenticated/cuisines/': typeof AuthenticatedCuisinesIndexRoute
   '/_authenticated/merchant-applications/': typeof AuthenticatedMerchantApplicationsIndexRoute
   '/_authenticated/my-catalog/': typeof AuthenticatedMyCatalogIndexRoute
+  '/_authenticated/my-floor-plan/': typeof AuthenticatedMyFloorPlanIndexRoute
   '/_authenticated/my-orders/': typeof AuthenticatedMyOrdersIndexRoute
   '/_authenticated/my-products/': typeof AuthenticatedMyProductsIndexRoute
   '/_authenticated/my-restaurant/': typeof AuthenticatedMyRestaurantIndexRoute
@@ -306,6 +316,7 @@ export interface FileRouteTypes {
     | '/cuisines/'
     | '/merchant-applications/'
     | '/my-catalog/'
+    | '/my-floor-plan/'
     | '/my-orders/'
     | '/my-products/'
     | '/my-restaurant/'
@@ -334,6 +345,7 @@ export interface FileRouteTypes {
     | '/cuisines'
     | '/merchant-applications'
     | '/my-catalog'
+    | '/my-floor-plan'
     | '/my-orders'
     | '/my-products'
     | '/my-restaurant'
@@ -364,6 +376,7 @@ export interface FileRouteTypes {
     | '/_authenticated/cuisines/'
     | '/_authenticated/merchant-applications/'
     | '/_authenticated/my-catalog/'
+    | '/_authenticated/my-floor-plan/'
     | '/_authenticated/my-orders/'
     | '/_authenticated/my-products/'
     | '/_authenticated/my-restaurant/'
@@ -506,6 +519,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyOrdersIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/my-floor-plan/': {
+      id: '/_authenticated/my-floor-plan/'
+      path: '/my-floor-plan'
+      fullPath: '/my-floor-plan/'
+      preLoaderRoute: typeof AuthenticatedMyFloorPlanIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-catalog/': {
       id: '/_authenticated/my-catalog/'
       path: '/my-catalog'
@@ -618,6 +638,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedCuisinesIndexRoute: typeof AuthenticatedCuisinesIndexRoute
   AuthenticatedMerchantApplicationsIndexRoute: typeof AuthenticatedMerchantApplicationsIndexRoute
   AuthenticatedMyCatalogIndexRoute: typeof AuthenticatedMyCatalogIndexRoute
+  AuthenticatedMyFloorPlanIndexRoute: typeof AuthenticatedMyFloorPlanIndexRoute
   AuthenticatedMyOrdersIndexRoute: typeof AuthenticatedMyOrdersIndexRoute
   AuthenticatedMyProductsIndexRoute: typeof AuthenticatedMyProductsIndexRoute
   AuthenticatedMyRestaurantIndexRoute: typeof AuthenticatedMyRestaurantIndexRoute
@@ -636,6 +657,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedMerchantApplicationsIndexRoute:
     AuthenticatedMerchantApplicationsIndexRoute,
   AuthenticatedMyCatalogIndexRoute: AuthenticatedMyCatalogIndexRoute,
+  AuthenticatedMyFloorPlanIndexRoute: AuthenticatedMyFloorPlanIndexRoute,
   AuthenticatedMyOrdersIndexRoute: AuthenticatedMyOrdersIndexRoute,
   AuthenticatedMyProductsIndexRoute: AuthenticatedMyProductsIndexRoute,
   AuthenticatedMyRestaurantIndexRoute: AuthenticatedMyRestaurantIndexRoute,

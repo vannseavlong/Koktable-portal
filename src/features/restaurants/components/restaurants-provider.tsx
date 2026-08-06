@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useDialogState from '@/hooks/use-dialog-state'
 import { type Restaurant, type RestaurantStatus } from '../data/schema'
 
-type RestaurantsDialogType = 'detail' | 'status' | 'locations'
+type RestaurantsDialogType = 'detail' | 'status' | 'locations' | 'floor-plan'
 
 type RestaurantsContextType = {
   open: RestaurantsDialogType | null
@@ -13,12 +13,20 @@ type RestaurantsContextType = {
   setTargetStatus: React.Dispatch<React.SetStateAction<RestaurantStatus | null>>
 }
 
-const RestaurantsContext = React.createContext<RestaurantsContextType | null>(null)
+const RestaurantsContext = React.createContext<RestaurantsContextType | null>(
+  null
+)
 
-export function RestaurantsProvider({ children }: { children: React.ReactNode }) {
+export function RestaurantsProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   const [open, setOpen] = useDialogState<RestaurantsDialogType>(null)
   const [currentRow, setCurrentRow] = useState<Restaurant | null>(null)
-  const [targetStatus, setTargetStatus] = useState<RestaurantStatus | null>(null)
+  const [targetStatus, setTargetStatus] = useState<RestaurantStatus | null>(
+    null
+  )
 
   return (
     <RestaurantsContext

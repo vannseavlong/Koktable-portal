@@ -3,6 +3,7 @@ import { locationSchema } from './location-schema'
 
 const restaurantStatusSchema = z.union([
   z.literal('pending'),
+  z.literal('unclaimed'),
   z.literal('active'),
   z.literal('suspended'),
 ])
@@ -31,6 +32,7 @@ export type RestaurantsListResponse = z.infer<typeof restaurantsListResponseSche
 // aren't a state an admin transitions manually.
 export const nextStatusOptions: Record<RestaurantStatus, RestaurantStatus[]> = {
   pending: [],
+  unclaimed: [],
   active: ['suspended'],
   suspended: ['active'],
 }

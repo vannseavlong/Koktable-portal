@@ -5,7 +5,6 @@ import {
   ClipboardCheck,
   Package,
   PawPrint,
-  Store,
   Tag,
   Users,
   Monitor,
@@ -17,6 +16,7 @@ import {
   Wrench,
   Command,
 } from 'lucide-react'
+import { IconRestaurant } from '@/assets/custom/icon-restaurant'
 import { type NavGroup, type SidebarData } from '../types'
 
 const settingsNavGroup: NavGroup = {
@@ -122,7 +122,7 @@ const adminSidebarData: SidebarData = {
         {
           title: 'Restaurants',
           url: '/restaurants',
-          icon: Store,
+          icon: IconRestaurant,
         },
       ],
     },
@@ -146,7 +146,7 @@ const merchantSidebarData: SidebarData = {
         {
           title: 'My Restaurant',
           url: '/my-restaurant',
-          icon: Store,
+          icon: IconRestaurant,
         },
         {
           title: 'My Catalog',

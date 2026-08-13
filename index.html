@@ -2,6 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <!--
+      Baseline CSP for the SPA itself. %VITE_API_BASE_URL% is substituted by
+      Vite at build time (see VITE_API_BASE_URL in .env); http://localhost:3000
+      stays allowlisted as the local-dev fallback the api client itself falls
+      back to. This can't cover header-only protections — HSTS, X-Frame-Options
+      / frame-ancestors, X-Content-Type-Options — those need to be set at the
+      hosting/CDN layer, which this repo doesn't control.
+    -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://drive.google.com https://*.googleusercontent.com; connect-src 'self' %VITE_API_BASE_URL% http://localhost:3000; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
     <link
       rel="icon"
       type="image/svg+xml"

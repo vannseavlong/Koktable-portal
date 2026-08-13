@@ -5,6 +5,21 @@
 
 const DEFAULT_MAX_AGE = 60 * 60 * 24 * 7 // 7 days
 
+// SameSite=Strict is safe here (not just Lax): these cookies are only ever
+// read back by this app's own JS via document.cookie, never sent as a
+// `Cookie` header to the Backend API (auth calls carry the token as an
+// `Authorization: Bearer` header instead, see api-client.ts) — so there's no
+// cross-site request during the Google OAuth redirect that depends on the
+// browser auto-attaching it. `Secure` is only added when actually served
+// over https, so it keeps working on http://localhost in dev.
+// These can't be `HttpOnly` — the app reads/writes them from client JS
+// (auth-store.ts), which is exactly what `HttpOnly` would block.
+function cookieAttributes(maxAge: number): string {
+  const secure =
+    typeof window !== 'undefined' && window.location.protocol === 'https:'
+  return `path=/; max-age=${maxAge}; SameSite=Strict${secure ? '; Secure' : ''}`
+}
+
 /**
  * Get a cookie value by name
  */
@@ -30,7 +45,7 @@ export function setCookie(
 ): void {
   if (typeof document === 'undefined') return
 
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}`
+  document.cookie = `${name}=${value}; ${cookieAttributes(maxAge)}`
 }
 
 /**
@@ -39,5 +54,5 @@ export function setCookie(
 export function removeCookie(name: string): void {
   if (typeof document === 'undefined') return
 
-  document.cookie = `${name}=; path=/; max-age=0`
+  document.cookie = `${name}=; ${cookieAttributes(0)}`
 }

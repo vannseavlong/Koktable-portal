@@ -1,6 +1,7 @@
 allowBuilds:
   '@clerk/shared': false
   esbuild: true
+  protobufjs: true
 
 # Transitive-only vulnerable versions pulled in by
 # @trivago/prettier-plugin-sort-imports@6.0.2 (its own minimatch dep hasn't

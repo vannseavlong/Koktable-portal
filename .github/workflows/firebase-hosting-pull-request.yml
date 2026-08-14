@@ -1,0 +1,58 @@
+name: Deploy Preview (Firebase Hosting)
+
+on:
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: firebase-preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  preview:
+    # Forked PRs don't have access to the FIREBASE_SERVICE_ACCOUNT secret —
+    # skip rather than fail noisily.
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint the code
+        run: pnpm lint
+
+      - name: Run Prettier check
+        run: pnpm format:check
+
+      - name: Install browsers
+        run: pnpm test:browser:install
+
+      - name: Run tests
+        run: pnpm test
+
+      - name: Build the project
+        run: pnpm build
+
+      # Deploys dist/ to an isolated, auto-expiring preview channel
+      # (one per PR) and comments the preview URL on the PR.
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SUNTEL_TECH }}"
+          projectId: suntel-tech
+          expires: 7d

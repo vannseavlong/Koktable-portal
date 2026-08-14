@@ -32,3 +32,8 @@ dist-ssr
 # Vitest artifacts (browser screenshots/attachments)
 **/__screenshots__/
 .vitest-attachments/
+
+# Firebase
+.firebase/
+firebase-debug.log
+.firebaserc.local

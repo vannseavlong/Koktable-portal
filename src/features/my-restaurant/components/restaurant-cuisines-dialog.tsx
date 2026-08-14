@@ -14,8 +14,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
-import { type Restaurant } from '../data/schema'
 import { updateMyRestaurantCuisines } from '../data/restaurant-api'
+import { type Restaurant } from '../data/schema'
 
 type RestaurantCuisinesDialogProps = {
   restaurant: Restaurant
@@ -65,15 +65,15 @@ export function RestaurantCuisinesDialog({
         <DialogHeader className='text-start'>
           <DialogTitle>Cuisines</DialogTitle>
           <DialogDescription>
-            Choose the cuisines that describe this restaurant. Saving
-            replaces the full set.
+            Choose the cuisines that describe this restaurant. Saving replaces
+            the full set.
           </DialogDescription>
         </DialogHeader>
         <div className='h-80 w-[calc(100%+0.75rem)] overflow-y-auto pe-3'>
           {isLoading ? (
-            <p className='text-muted-foreground text-sm'>Loading cuisines…</p>
+            <p className='text-sm text-muted-foreground'>Loading cuisines…</p>
           ) : cuisines.length === 0 ? (
-            <p className='text-muted-foreground text-sm'>
+            <p className='text-sm text-muted-foreground'>
               No cuisines available yet.
             </p>
           ) : (

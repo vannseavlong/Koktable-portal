@@ -27,8 +27,11 @@ export function updateReservationStatus(
   userId: string,
   status: ReservationStatus
 ) {
-  return apiClient.patch<{ reservation: Reservation }>(`/admin/reservations/${reservationId}`, {
-    user_id: userId,
-    status,
-  })
+  return apiClient.patch<{ reservation: Reservation }>(
+    `/admin/reservations/${reservationId}`,
+    {
+      user_id: userId,
+      status,
+    }
+  )
 }

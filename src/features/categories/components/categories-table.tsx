@@ -23,8 +23,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
-import { type Category } from '../data/schema'
 import { reorderCategories, updateCategory } from '../data/categories-api'
+import { type Category } from '../data/schema'
 import { createCategoriesColumns } from './categories-columns'
 
 type DataTableProps = {

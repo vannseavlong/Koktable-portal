@@ -59,7 +59,9 @@ export function RestaurantsTable({ data, search, navigate }: DataTableProps) {
 
   const cityOptions = useMemo(() => {
     const cities = new Set(
-      data.map((r) => primaryLocation(r.locations)?.city).filter((c): c is string => !!c)
+      data
+        .map((r) => primaryLocation(r.locations)?.city)
+        .filter((c): c is string => !!c)
     )
     return Array.from(cities)
       .sort()

@@ -47,8 +47,8 @@ export function MyOrdersStatusDialog({
       title={`Move order to "${statusLabels[targetStatus]}"?`}
       desc={
         <p>
-          Order <span className='font-mono'>{currentRow.reservation_id}</span> for{' '}
-          <span className='font-bold'>{currentRow.guest_name}</span> (
+          Order <span className='font-mono'>{currentRow.reservation_id}</span>{' '}
+          for <span className='font-bold'>{currentRow.guest_name}</span> (
           {currentRow.service_name}) will move from{' '}
           <span className='font-bold'>{statusLabels[currentRow.status]}</span>{' '}
           to <span className='font-bold'>{statusLabels[targetStatus]}</span>.

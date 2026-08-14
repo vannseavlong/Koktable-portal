@@ -205,10 +205,7 @@ export function ServicesMutateDialog({
                     <FormLabel className='col-span-2 text-end'>
                       Category
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className='col-span-4'>
                           <SelectValue placeholder='Select a category' />

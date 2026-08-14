@@ -8,6 +8,7 @@ import { toast } from 'sonner'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { handleServerError } from '@/lib/handle-server-error'
 import { cn } from '@/lib/utils'
+import { useCategories } from '@/hooks/use-categories'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -34,9 +35,11 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { useCategories } from '@/hooks/use-categories'
+import {
+  updateMyRestaurant,
+  type RestaurantUpdatePayload,
+} from '../data/restaurant-api'
 import { type Restaurant } from '../data/schema'
-import { updateMyRestaurant, type RestaurantUpdatePayload } from '../data/restaurant-api'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -208,10 +211,7 @@ export function RestaurantEditDialog({
                   <FormItem>
                     <FormLabel>Restaurant name</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder='The Golden Fork'
-                        {...field}
-                      />
+                      <Input placeholder='The Golden Fork' {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -268,7 +268,11 @@ export function RestaurantEditDialog({
           </Form>
         </div>
         <DialogFooter>
-          <Button type='submit' form='restaurant-edit-form' disabled={isPending}>
+          <Button
+            type='submit'
+            form='restaurant-edit-form'
+            disabled={isPending}
+          >
             Save changes
           </Button>
         </DialogFooter>

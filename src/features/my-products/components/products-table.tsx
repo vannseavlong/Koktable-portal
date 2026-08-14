@@ -13,6 +13,7 @@ import {
 import { toast } from 'sonner'
 import { handleServerError } from '@/lib/handle-server-error'
 import { cn } from '@/lib/utils'
+import { useCategories } from '@/hooks/use-categories'
 import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,
@@ -23,7 +24,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
-import { useCategories } from '@/hooks/use-categories'
 import { updateProduct } from '../data/products-api'
 import { type Product } from '../data/schema'
 import { createProductsColumns } from './products-columns'
@@ -94,7 +94,8 @@ export function ProductsTable({ data, search, navigate }: DataTableProps) {
       const term = filterValue.trim().toLowerCase()
       if (!term) return true
       const item = row.original as Product
-      const categoryName = categoryNameById.get(item.category_id ?? '')?.name ?? ''
+      const categoryName =
+        categoryNameById.get(item.category_id ?? '')?.name ?? ''
       return (
         item.name.toLowerCase().includes(term) ||
         categoryName.toLowerCase().includes(term)

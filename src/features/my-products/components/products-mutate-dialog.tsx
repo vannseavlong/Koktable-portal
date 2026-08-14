@@ -7,6 +7,7 @@ import { ImagePlus, PawPrint, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { handleServerError } from '@/lib/handle-server-error'
+import { useCategories } from '@/hooks/use-categories'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -34,7 +35,6 @@ import {
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
-import { useCategories } from '@/hooks/use-categories'
 import { createProduct, updateProduct } from '../data/products-api'
 import { type Product } from '../data/schema'
 
@@ -265,10 +265,7 @@ export function ProductsMutateDialog({
                     <FormLabel className='col-span-2 text-end'>
                       Category
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className='col-span-4'>
                           <SelectValue placeholder='Select a category' />

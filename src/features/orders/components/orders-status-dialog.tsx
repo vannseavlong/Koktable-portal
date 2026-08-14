@@ -2,8 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { handleServerError } from '@/lib/handle-server-error'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { updateReservationStatus } from '../data/reservations-api'
 import { statusLabels } from '../data/data'
+import { updateReservationStatus } from '../data/reservations-api'
 import { type Reservation, type ReservationStatus } from '../data/schema'
 
 type OrdersStatusDialogProps = {
@@ -47,7 +47,8 @@ export function OrdersStatusDialog({
       title={`Move reservation to "${statusLabels[targetStatus]}"?`}
       desc={
         <p>
-          Reservation <span className='font-mono'>{currentRow.reservation_id}</span> for{' '}
+          Reservation{' '}
+          <span className='font-mono'>{currentRow.reservation_id}</span> for{' '}
           <span className='font-bold'>{currentRow.guest_name}</span> (
           {currentRow.service_name}) will move from{' '}
           <span className='font-bold'>{statusLabels[currentRow.status]}</span>{' '}

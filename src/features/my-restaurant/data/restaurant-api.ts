@@ -27,7 +27,10 @@ export function updateMyRestaurant(payload: RestaurantUpdatePayload) {
     if (value === undefined) continue
     formData.append(key, value)
   }
-  return apiClient.patchForm<{ restaurant: Restaurant }>('/merchant/restaurant', formData)
+  return apiClient.patchForm<{ restaurant: Restaurant }>(
+    '/merchant/restaurant',
+    formData
+  )
 }
 
 export type LocationUpdatePayload = Partial<{
@@ -43,18 +46,26 @@ export type LocationUpdatePayload = Partial<{
 // `PATCH /merchant/restaurant/location` — updates (or creates, if this restaurant
 // somehow has none yet) the restaurant's primary location.
 export function updateMyRestaurantLocation(payload: LocationUpdatePayload) {
-  return apiClient.patch<{ location: Location }>('/merchant/restaurant/location', payload)
+  return apiClient.patch<{ location: Location }>(
+    '/merchant/restaurant/location',
+    payload
+  )
 }
 
 // `PUT /merchant/restaurant/hours` replaces the full week — days omitted from `days`
 // end up with no row, not "unchanged". Always submit all 7.
 export function updateMyRestaurantHours(days: DayHours[]) {
-  return apiClient.put<{ hours: DayHours[] }>('/merchant/restaurant/hours', { days })
+  return apiClient.put<{ hours: DayHours[] }>('/merchant/restaurant/hours', {
+    days,
+  })
 }
 
 // `PUT /merchant/restaurant/cuisines` replaces the full set — mirrors the hours
 // endpoint's replace-all semantics. Body takes cuisine *names* (not ids), matching
 // `restaurantCuisines.service.ts`'s `setForRestaurant(restaurantId, cuisineNames)`.
 export function updateMyRestaurantCuisines(cuisines: string[]) {
-  return apiClient.put<{ cuisines: string[] }>('/merchant/restaurant/cuisines', { cuisines })
+  return apiClient.put<{ cuisines: string[] }>(
+    '/merchant/restaurant/cuisines',
+    { cuisines }
+  )
 }

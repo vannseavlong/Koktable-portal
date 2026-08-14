@@ -14,7 +14,9 @@ export const merchantApplicationsColumns: ColumnDef<MerchantApplication>[] = [
       <DataTableColumnHeader column={column} title='Restaurant' />
     ),
     cell: ({ row }) => (
-      <LongText className='max-w-48 ps-3'>{row.getValue('restaurant_name')}</LongText>
+      <LongText className='max-w-48 ps-3'>
+        {row.getValue('restaurant_name')}
+      </LongText>
     ),
     enableHiding: false,
   },

@@ -22,8 +22,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { type Restaurant } from '../data/schema'
 import { updateMyRestaurantLocation } from '../data/restaurant-api'
+import { type Restaurant } from '../data/schema'
 
 const formSchema = z.object({
   contact_email: z.email('Enter a valid email.').optional().or(z.literal('')),
@@ -61,11 +61,16 @@ export function RestaurantLocationDialog({
   })
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (values: LocationFormValues) => updateMyRestaurantLocation(values),
+    mutationFn: (values: LocationFormValues) =>
+      updateMyRestaurantLocation(values),
     onSuccess: (data) => {
       toast.success('Location updated.')
-      queryClient.setQueryData(['my-restaurant'], (current: { restaurant: Restaurant } | undefined) =>
-        current ? { restaurant: { ...current.restaurant, location: data.location } } : current
+      queryClient.setQueryData(
+        ['my-restaurant'],
+        (current: { restaurant: Restaurant } | undefined) =>
+          current
+            ? { restaurant: { ...current.restaurant, location: data.location } }
+            : current
       )
       onOpenChange(false)
     },
@@ -78,7 +83,8 @@ export function RestaurantLocationDialog({
         <DialogHeader className='text-start'>
           <DialogTitle>Location details</DialogTitle>
           <DialogDescription>
-            Contact info and address for this restaurant&apos;s primary location.
+            Contact info and address for this restaurant&apos;s primary
+            location.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -95,7 +101,11 @@ export function RestaurantLocationDialog({
                   <FormItem>
                     <FormLabel>Contact email</FormLabel>
                     <FormControl>
-                      <Input type='email' placeholder='sam@goldenfork.example' {...field} />
+                      <Input
+                        type='email'
+                        placeholder='sam@goldenfork.example'
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -123,7 +133,10 @@ export function RestaurantLocationDialog({
                 <FormItem>
                   <FormLabel>Address</FormLabel>
                   <FormControl>
-                    <Input placeholder='218 Street 184, Phnom Penh 12211, Cambodia' {...field} />
+                    <Input
+                      placeholder='218 Street 184, Phnom Penh 12211, Cambodia'
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -146,7 +159,11 @@ export function RestaurantLocationDialog({
           </form>
         </Form>
         <DialogFooter>
-          <Button type='submit' form='restaurant-location-form' disabled={isPending}>
+          <Button
+            type='submit'
+            form='restaurant-location-form'
+            disabled={isPending}
+          >
             Save location
           </Button>
         </DialogFooter>

@@ -28,8 +28,11 @@ export function updateOrderStatus(
   userId: string,
   status: OrderStatus
 ) {
-  return apiClient.patch<{ order: Order }>(`/merchant/orders/${reservationId}`, {
-    user_id: userId,
-    status,
-  })
+  return apiClient.patch<{ order: Order }>(
+    `/merchant/orders/${reservationId}`,
+    {
+      user_id: userId,
+      status,
+    }
+  )
 }

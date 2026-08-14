@@ -10,7 +10,9 @@ type OrdersContextType = {
   currentRow: Reservation | null
   setCurrentRow: React.Dispatch<React.SetStateAction<Reservation | null>>
   targetStatus: ReservationStatus | null
-  setTargetStatus: React.Dispatch<React.SetStateAction<ReservationStatus | null>>
+  setTargetStatus: React.Dispatch<
+    React.SetStateAction<ReservationStatus | null>
+  >
 }
 
 const OrdersContext = React.createContext<OrdersContextType | null>(null)
@@ -18,7 +20,9 @@ const OrdersContext = React.createContext<OrdersContextType | null>(null)
 export function OrdersProvider({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useDialogState<OrdersDialogType>(null)
   const [currentRow, setCurrentRow] = useState<Reservation | null>(null)
-  const [targetStatus, setTargetStatus] = useState<ReservationStatus | null>(null)
+  const [targetStatus, setTargetStatus] = useState<ReservationStatus | null>(
+    null
+  )
 
   return (
     <OrdersContext

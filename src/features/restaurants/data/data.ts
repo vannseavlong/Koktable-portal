@@ -15,7 +15,7 @@ export const statusStyles = new Map<RestaurantStatus, string>([
 
 export const statusOptions: { label: string; value: RestaurantStatus }[] = [
   { label: 'Pending', value: 'pending' },
-  { label: 'Unclaimed', value: 'unclaimed'},
+  { label: 'Unclaimed', value: 'unclaimed' },
   { label: 'Active', value: 'active' },
   { label: 'Suspended', value: 'suspended' },
 ]

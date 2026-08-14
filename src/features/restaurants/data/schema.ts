@@ -25,7 +25,9 @@ export type Restaurant = z.infer<typeof _restaurantSchema>
 export const restaurantsListResponseSchema = z.object({
   restaurants: z.array(_restaurantSchema),
 })
-export type RestaurantsListResponse = z.infer<typeof restaurantsListResponseSchema>
+export type RestaurantsListResponse = z.infer<
+  typeof restaurantsListResponseSchema
+>
 
 // Admin can only suspend an active restaurant or reactivate a suspended one —
 // `pending` restaurants are waiting on the merchant to accept their invite and

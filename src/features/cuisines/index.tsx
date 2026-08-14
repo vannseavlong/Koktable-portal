@@ -37,8 +37,7 @@ export function Cuisines() {
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>Cuisines</h2>
             <p className='text-muted-foreground'>
-              Manage the cuisines restaurants can be tagged with across the
-              app.
+              Manage the cuisines restaurants can be tagged with across the app.
             </p>
           </div>
           <CuisinesPrimaryButtons />

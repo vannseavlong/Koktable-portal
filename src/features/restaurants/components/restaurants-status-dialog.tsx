@@ -3,8 +3,8 @@ import { toast } from 'sonner'
 import { handleServerError } from '@/lib/handle-server-error'
 import { ConfirmDialog } from '@/components/confirm-dialog'
 import { statusLabels } from '../data/data'
-import { type Restaurant, type RestaurantStatus } from '../data/schema'
 import { updateRestaurantStatus } from '../data/restaurants-api'
+import { type Restaurant, type RestaurantStatus } from '../data/schema'
 
 type RestaurantsStatusDialogProps = {
   open: boolean
@@ -22,7 +22,8 @@ export function RestaurantsStatusDialog({
   const queryClient = useQueryClient()
 
   const { mutate, isPending } = useMutation({
-    mutationFn: () => updateRestaurantStatus(currentRow.restaurant_id, targetStatus),
+    mutationFn: () =>
+      updateRestaurantStatus(currentRow.restaurant_id, targetStatus),
     onSuccess: () => {
       toast.success(
         `${currentRow.name} is now ${statusLabels[targetStatus].toLowerCase()}.`

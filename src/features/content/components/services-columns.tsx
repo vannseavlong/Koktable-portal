@@ -87,7 +87,9 @@ export function createServicesColumns({
         const category = categoryNameById.get(row.getValue('category_id'))
         return (
           <Badge variant='outline'>
-            {category ? `${category.icon ? `${category.icon} ` : ''}${category.name}` : 'Unknown'}
+            {category
+              ? `${category.icon ? `${category.icon} ` : ''}${category.name}`
+              : 'Unknown'}
           </Badge>
         )
       },

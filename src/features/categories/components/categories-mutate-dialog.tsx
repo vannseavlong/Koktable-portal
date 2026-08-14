@@ -23,8 +23,8 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Switch } from '@/components/ui/switch'
-import { type Category } from '../data/schema'
 import { createCategory, updateCategory } from '../data/categories-api'
+import { type Category } from '../data/schema'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required.'),
@@ -129,11 +129,7 @@ export function CategoriesMutateDialog({
                 <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
                   <FormLabel className='col-span-2 text-end'>Icon</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder='🛁'
-                      className='col-span-4'
-                      {...field}
-                    />
+                    <Input placeholder='🛁' className='col-span-4' {...field} />
                   </FormControl>
                   <FormMessage className='col-span-4 col-start-3' />
                 </FormItem>
@@ -144,9 +140,7 @@ export function CategoriesMutateDialog({
               name='active'
               render={({ field }) => (
                 <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
-                  <FormLabel className='col-span-2 text-end'>
-                    Active
-                  </FormLabel>
+                  <FormLabel className='col-span-2 text-end'>Active</FormLabel>
                   <FormControl>
                     <Switch
                       checked={field.value}

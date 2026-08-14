@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { handleServerError } from '@/lib/handle-server-error'
+import { useCategories } from '@/hooks/use-categories'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -31,7 +32,6 @@ import {
 } from '@/components/ui/select'
 import { Switch } from '@/components/ui/switch'
 import { Textarea } from '@/components/ui/textarea'
-import { useCategories } from '@/hooks/use-categories'
 import { createCatalogItem, updateCatalogItem } from '../data/catalog-items-api'
 import { type CatalogItem } from '../data/schema'
 
@@ -204,10 +204,7 @@ export function CatalogItemsMutateDialog({
                     <FormLabel className='col-span-2 text-end'>
                       Category
                     </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className='col-span-4'>
                           <SelectValue placeholder='Select a category' />

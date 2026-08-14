@@ -23,8 +23,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
-import { type Cuisine } from '../data/schema'
 import { reorderCuisines, updateCuisine } from '../data/cuisines-api'
+import { type Cuisine } from '../data/schema'
 import { createCuisinesColumns } from './cuisines-columns'
 
 type DataTableProps = {

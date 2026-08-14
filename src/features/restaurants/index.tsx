@@ -38,8 +38,8 @@ export function Restaurants() {
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>Restaurants</h2>
             <p className='text-muted-foreground'>
-              Every restaurant on the marketplace. Suspend or reactivate a restaurant&apos;s
-              storefront here.
+              Every restaurant on the marketplace. Suspend or reactivate a
+              restaurant&apos;s storefront here.
             </p>
           </div>
         </div>

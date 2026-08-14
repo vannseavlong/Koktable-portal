@@ -29,7 +29,9 @@ export const myOrdersColumns: ColumnDef<Order>[] = [
     cell: ({ row }) => (
       <LongText className='max-w-36'>
         {row.original.guest_name}{' '}
-        <span className='text-muted-foreground'>({row.original.party_size})</span>
+        <span className='text-muted-foreground'>
+          ({row.original.party_size})
+        </span>
       </LongText>
     ),
   },

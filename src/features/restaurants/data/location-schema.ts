@@ -32,6 +32,8 @@ export type Location = z.infer<typeof locationSchema>
 
 // Helper for views that only show one location per restaurant (admin list/detail —
 // full multi-location management isn't built yet, see restaurant_locations.ts's history).
-export function primaryLocation(locations: Location[] | undefined): Location | undefined {
+export function primaryLocation(
+  locations: Location[] | undefined
+): Location | undefined {
   return locations?.[0]
 }

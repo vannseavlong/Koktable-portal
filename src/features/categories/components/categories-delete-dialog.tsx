@@ -7,8 +7,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { type Category } from '../data/schema'
 import { deleteCategory } from '../data/categories-api'
+import { type Category } from '../data/schema'
 
 type CategoriesDeleteDialogProps = {
   open: boolean

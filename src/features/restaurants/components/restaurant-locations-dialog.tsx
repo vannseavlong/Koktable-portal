@@ -5,8 +5,6 @@ import { toast } from 'sonner'
 import { handleServerError } from '@/lib/handle-server-error'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ConfirmDialog } from '@/components/confirm-dialog'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Dialog,
   DialogContent,
@@ -14,8 +12,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { fetchRestaurants, updateRestaurantLocation } from '../data/restaurants-api'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { ConfirmDialog } from '@/components/confirm-dialog'
 import { type Location } from '../data/location-schema'
+import {
+  fetchRestaurants,
+  updateRestaurantLocation,
+} from '../data/restaurants-api'
 import { type Restaurant } from '../data/schema'
 import { RestaurantLocationMutateDialog } from './restaurant-location-mutate-dialog'
 
@@ -44,8 +47,9 @@ export function RestaurantLocationsDialog({
   })
 
   const restaurant =
-    data?.restaurants.find((r) => r.restaurant_id === currentRow.restaurant_id) ??
-    currentRow
+    data?.restaurants.find(
+      (r) => r.restaurant_id === currentRow.restaurant_id
+    ) ?? currentRow
   const locations = restaurant.locations ?? []
   const activeCount = locations.filter((l) => l.active !== false).length
 
@@ -53,10 +57,18 @@ export function RestaurantLocationsDialog({
   const [editingLocation, setEditingLocation] = useState<Location | undefined>(
     undefined
   )
-  const [deactivateTarget, setDeactivateTarget] = useState<Location | null>(null)
+  const [deactivateTarget, setDeactivateTarget] = useState<Location | null>(
+    null
+  )
 
   const { mutate: toggleActive, isPending: isToggling } = useMutation({
-    mutationFn: ({ location, active }: { location: Location; active: boolean }) =>
+    mutationFn: ({
+      location,
+      active,
+    }: {
+      location: Location
+      active: boolean
+    }) =>
       updateRestaurantLocation(currentRow.restaurant_id, location.location_id, {
         active,
       }),
@@ -88,8 +100,8 @@ export function RestaurantLocationsDialog({
             <DialogTitle>Locations — {currentRow.name}</DialogTitle>
             <DialogDescription>
               Manage this restaurant&apos;s physical locations. Locations stay
-              admin-created; deactivating hides one from customers without deleting
-              it.
+              admin-created; deactivating hides one from customers without
+              deleting it.
             </DialogDescription>
           </DialogHeader>
 
@@ -102,7 +114,7 @@ export function RestaurantLocationsDialog({
           <ScrollArea className='max-h-[55vh]'>
             <div className='space-y-3 pe-3'>
               {locations.length === 0 && (
-                <p className='text-muted-foreground py-6 text-center text-sm'>
+                <p className='py-6 text-center text-sm text-muted-foreground'>
                   No locations yet.
                 </p>
               )}
@@ -121,9 +133,10 @@ export function RestaurantLocationsDialog({
                           {isActive ? 'Active' : 'Inactive'}
                         </Badge>
                       </div>
-                      <p className='text-muted-foreground text-sm'>
-                        {[location.address, location.city].filter(Boolean).join(', ') ||
-                          '—'}
+                      <p className='text-sm text-muted-foreground'>
+                        {[location.address, location.city]
+                          .filter(Boolean)
+                          .join(', ') || '—'}
                       </p>
                     </div>
                     <div className='flex shrink-0 items-center gap-2'>
@@ -153,7 +166,9 @@ export function RestaurantLocationsDialog({
                           variant='outline'
                           size='sm'
                           disabled={isToggling}
-                          onClick={() => toggleActive({ location, active: true })}
+                          onClick={() =>
+                            toggleActive({ location, active: true })
+                          }
                         >
                           Reactivate
                         </Button>

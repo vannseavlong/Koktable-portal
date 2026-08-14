@@ -12,6 +12,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table'
 import { cn } from '@/lib/utils'
+import { useRestaurants } from '@/hooks/use-restaurants'
 import { type NavigateFn, useTableUrlState } from '@/hooks/use-table-url-state'
 import {
   Table,
@@ -22,7 +23,6 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
-import { useRestaurants } from '@/hooks/use-restaurants'
 import { statusOptions } from '../data/data'
 import { type Reservation } from '../data/schema'
 import { createOrdersColumns } from './orders-columns'

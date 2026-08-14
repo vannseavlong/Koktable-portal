@@ -19,12 +19,21 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { type DayOfWeek, formatDayHours } from '@/features/restaurants/data/hours-schema'
+import {
+  type DayOfWeek,
+  formatDayHours,
+} from '@/features/restaurants/data/hours-schema'
 import { type Restaurant } from '../data/schema'
 
 // Date#getDay(): 0 = Sunday.
 const jsDayToDayOfWeek: DayOfWeek[] = [
-  'sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday',
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
 ]
 
 const statusStyles: Record<Restaurant['status'], string> = {
@@ -44,8 +53,16 @@ type RestaurantProfilePreviewProps = {
 
 // Read-only storefront-style header — the counterpart to the always-editable
 // form this page used to render. Edit opens `RestaurantEditDialog` instead.
-export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEditLocation, onEditCuisines }: RestaurantProfilePreviewProps) {
-  const today = restaurant.hours.find((d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()])
+export function RestaurantProfilePreview({
+  restaurant,
+  onEdit,
+  onEditHours,
+  onEditLocation,
+  onEditCuisines,
+}: RestaurantProfilePreviewProps) {
+  const today = restaurant.hours.find(
+    (d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()]
+  )
   return (
     <Card className='overflow-hidden py-0'>
       <div className='relative h-36 w-full bg-linear-to-br from-teal-100 to-emerald-50 sm:h-52 dark:from-teal-950 dark:to-emerald-950'>
@@ -86,7 +103,10 @@ export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEd
 
       <CardContent className='relative pb-6'>
         <Avatar className='absolute -top-10 size-20 border-4 border-background shadow-sm sm:-top-12 sm:size-24'>
-          <AvatarImage src={toDisplayImageUrl(restaurant.logo)} alt={restaurant.name} />
+          <AvatarImage
+            src={toDisplayImageUrl(restaurant.logo)}
+            alt={restaurant.name}
+          />
           <AvatarFallback>
             <Store className='size-8 text-muted-foreground' />
           </AvatarFallback>
@@ -94,7 +114,9 @@ export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEd
 
         <div className='flex flex-col gap-4 pt-12 sm:pt-14'>
           <div className='flex flex-wrap items-center gap-2'>
-            <h2 className='text-xl font-bold tracking-tight'>{restaurant.name}</h2>
+            <h2 className='text-xl font-bold tracking-tight'>
+              {restaurant.name}
+            </h2>
             <Badge
               variant='outline'
               className={statusStyles[restaurant.status] + ' capitalize'}
@@ -122,8 +144,8 @@ export function RestaurantProfilePreview({ restaurant, onEdit, onEditHours, onEd
             )}
             {today && (
               <span className='flex items-start gap-2 text-muted-foreground'>
-                <Clock className='size-4 shrink-0 translate-y-0.5' />{' '}
-                Today: {formatDayHours(today)}
+                <Clock className='size-4 shrink-0 translate-y-0.5' /> Today:{' '}
+                {formatDayHours(today)}
               </span>
             )}
           </div>

@@ -35,8 +35,8 @@ export function MerchantRegister() {
               Apply to become a merchant
             </h1>
             <p className='text-sm text-muted-foreground'>
-              Tell us about your restaurant — we&apos;ll be in touch once it&apos;s
-              reviewed.
+              Tell us about your restaurant — we&apos;ll be in touch once
+              it&apos;s reviewed.
             </p>
           </div>
 

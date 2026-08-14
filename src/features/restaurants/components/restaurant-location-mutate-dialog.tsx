@@ -22,8 +22,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { createRestaurantLocation, updateRestaurantLocation } from '../data/restaurants-api'
 import { type Location } from '../data/location-schema'
+import {
+  createRestaurantLocation,
+  updateRestaurantLocation,
+} from '../data/restaurants-api'
 
 // Mirrors `LocationInput` (restaurants-api.ts) — every field optional, matching
 // `Backend/src/services/restaurantLocations.service.ts`. `latitude`/`longitude` use
@@ -113,7 +116,7 @@ export function RestaurantLocationMutateDialog({
           <DialogDescription>
             {isEdit
               ? 'Update this location here.'
-              : "Add a new location for this restaurant."}{' '}
+              : 'Add a new location for this restaurant.'}{' '}
             Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
@@ -223,7 +226,9 @@ export function RestaurantLocationMutateDialog({
               name='latitude'
               render={({ field }) => (
                 <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
-                  <FormLabel className='col-span-2 text-end'>Latitude</FormLabel>
+                  <FormLabel className='col-span-2 text-end'>
+                    Latitude
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type='number'
@@ -243,7 +248,9 @@ export function RestaurantLocationMutateDialog({
               name='longitude'
               render={({ field }) => (
                 <FormItem className='grid grid-cols-6 items-center space-y-0 gap-x-4 gap-y-1'>
-                  <FormLabel className='col-span-2 text-end'>Longitude</FormLabel>
+                  <FormLabel className='col-span-2 text-end'>
+                    Longitude
+                  </FormLabel>
                   <FormControl>
                     <Input
                       type='number'
@@ -261,7 +268,11 @@ export function RestaurantLocationMutateDialog({
           </form>
         </Form>
         <DialogFooter>
-          <Button type='submit' form='restaurant-location-form' disabled={isPending}>
+          <Button
+            type='submit'
+            form='restaurant-location-form'
+            disabled={isPending}
+          >
             Save changes
           </Button>
         </DialogFooter>

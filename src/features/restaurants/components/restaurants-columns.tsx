@@ -38,7 +38,8 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
     ),
     cell: ({ row }) => {
       const cuisine = row.original.cuisines ?? []
-      if (cuisine.length === 0) return <span className='text-muted-foreground'>—</span>
+      if (cuisine.length === 0)
+        return <span className='text-muted-foreground'>—</span>
       return (
         <div className='flex max-w-48 flex-wrap gap-1'>
           {cuisine.map((c) => (
@@ -63,12 +64,16 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
     ),
     cell: ({ row }) => {
       const location = primaryLocation(row.original.locations)
-      if (location?.rating == null) return <span className='text-muted-foreground'>—</span>
+      if (location?.rating == null)
+        return <span className='text-muted-foreground'>—</span>
       return (
         <div className='text-nowrap'>
           <span>★ {location.rating.toFixed(1)}</span>
           {location.rating_count != null && (
-            <span className='text-xs text-muted-foreground'> ({location.rating_count})</span>
+            <span className='text-xs text-muted-foreground'>
+              {' '}
+              ({location.rating_count})
+            </span>
           )}
         </div>
       )
@@ -81,7 +86,9 @@ export const restaurantsColumns: ColumnDef<Restaurant>[] = [
       <DataTableColumnHeader column={column} title='Price' />
     ),
     cell: ({ row }) => (
-      <span className='text-nowrap'>{primaryLocation(row.original.locations)?.price_symbol || '—'}</span>
+      <span className='text-nowrap'>
+        {primaryLocation(row.original.locations)?.price_symbol || '—'}
+      </span>
     ),
   },
   {

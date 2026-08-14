@@ -45,10 +45,11 @@ export const reservationsListResponseSchema = z.object({
 //   pending -> confirmed -> active -> completed
 //      \-------\----------\----------> cancelled (from any non-terminal state)
 // `completed` and `cancelled` are terminal.
-export const nextStatusOptions: Record<ReservationStatus, ReservationStatus[]> = {
-  pending: ['confirmed', 'cancelled'],
-  confirmed: ['active', 'cancelled'],
-  active: ['completed', 'cancelled'],
-  completed: [],
-  cancelled: [],
-}
+export const nextStatusOptions: Record<ReservationStatus, ReservationStatus[]> =
+  {
+    pending: ['confirmed', 'cancelled'],
+    confirmed: ['active', 'cancelled'],
+    active: ['completed', 'cancelled'],
+    completed: [],
+    cancelled: [],
+  }

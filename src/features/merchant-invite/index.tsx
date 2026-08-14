@@ -94,7 +94,8 @@ export function MerchantInviteAccept() {
           Welcome, {data.restaurant.name}
         </h1>
         <p className='text-sm text-muted-foreground'>
-          {data.restaurant.description || 'Set a password to activate your account.'}
+          {data.restaurant.description ||
+            'Set a password to activate your account.'}
         </p>
         <p className='text-xs text-muted-foreground'>{data.email}</p>
       </div>

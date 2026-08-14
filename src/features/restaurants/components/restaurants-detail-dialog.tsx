@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ScrollArea } from '@/components/ui/scroll-area'
 import {
   Dialog,
   DialogContent,
@@ -9,9 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { statusLabels, statusStyles } from '../data/data'
-import { type Restaurant } from '../data/schema'
 import { primaryLocation } from '../data/location-schema'
+import { type Restaurant } from '../data/schema'
 import { useRestaurants } from './restaurants-provider'
 
 type RestaurantsDetailDialogProps = {
@@ -53,7 +53,9 @@ export function RestaurantsDetailDialog({
               {statusLabels[currentRow.status]}
             </Badge>
           </DialogTitle>
-          <DialogDescription>Restaurant {currentRow.restaurant_id}.</DialogDescription>
+          <DialogDescription>
+            Restaurant {currentRow.restaurant_id}.
+          </DialogDescription>
         </DialogHeader>
         <ScrollArea className='max-h-[70vh]'>
           <dl className='divide-y'>
@@ -68,7 +70,11 @@ export function RestaurantsDetailDialog({
                 currentRow.cuisines && currentRow.cuisines.length > 0 ? (
                   <div className='flex flex-wrap gap-1'>
                     {currentRow.cuisines.map((c) => (
-                      <Badge key={c} variant='secondary' className='font-normal'>
+                      <Badge
+                        key={c}
+                        variant='secondary'
+                        className='font-normal'
+                      >
                         {c}
                       </Badge>
                     ))}

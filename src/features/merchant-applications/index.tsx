@@ -40,8 +40,8 @@ export function MerchantApplications() {
               Merchant Applications
             </h2>
             <p className='text-muted-foreground'>
-              Review restaurant registration requests. Approving one creates a restaurant
-              and emails the applicant an invite.
+              Review restaurant registration requests. Approving one creates a
+              restaurant and emails the applicant an invite.
             </p>
           </div>
         </div>

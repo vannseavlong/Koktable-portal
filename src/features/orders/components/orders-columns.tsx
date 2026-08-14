@@ -36,7 +36,9 @@ export function createOrdersColumns({
       cell: ({ row }) => (
         <LongText className='max-w-36'>
           {row.original.guest_name}{' '}
-          <span className='text-muted-foreground'>({row.original.party_size})</span>
+          <span className='text-muted-foreground'>
+            ({row.original.party_size})
+          </span>
         </LongText>
       ),
     },
@@ -48,7 +50,8 @@ export function createOrdersColumns({
       ),
       cell: ({ row }) => {
         const restaurantId = row.original.restaurant_id
-        if (!restaurantId) return <span className='text-muted-foreground'>—</span>
+        if (!restaurantId)
+          return <span className='text-muted-foreground'>—</span>
         return (
           <LongText className='max-w-40'>
             {restaurantNameById.get(restaurantId) ?? restaurantId}

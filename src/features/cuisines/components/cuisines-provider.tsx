@@ -29,7 +29,9 @@ export const useCuisinesContext = () => {
   const cuisinesContext = React.useContext(CuisinesContext)
 
   if (!cuisinesContext) {
-    throw new Error('useCuisinesContext has to be used within <CuisinesContext>')
+    throw new Error(
+      'useCuisinesContext has to be used within <CuisinesContext>'
+    )
   }
 
   return cuisinesContext

@@ -7,8 +7,8 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { ConfirmDialog } from '@/components/confirm-dialog'
-import { type Cuisine } from '../data/schema'
 import { deleteCuisine } from '../data/cuisines-api'
+import { type Cuisine } from '../data/schema'
 
 type CuisinesDeleteDialogProps = {
   open: boolean
@@ -64,8 +64,8 @@ export function CuisinesDeleteDialog({
             Are you sure you want to delete{' '}
             <span className='font-bold'>{currentRow.name}</span>? This is a{' '}
             <span className='font-bold'>hard delete</span> — the cuisine is
-            removed for good, with no undo. Restaurants still pointing at
-            this cuisine keep the stale reference rather than being cleared.
+            removed for good, with no undo. Restaurants still pointing at this
+            cuisine keep the stale reference rather than being cleared.
           </p>
 
           <Label className='my-2'>

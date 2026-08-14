@@ -37,8 +37,8 @@ export function MyProducts() {
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>My Products</h2>
             <p className='text-muted-foreground'>
-              Manage the merchandise, ingredients, and other physical items your restaurant
-              sells.
+              Manage the merchandise, ingredients, and other physical items your
+              restaurant sells.
             </p>
           </div>
           <ProductsPrimaryButtons />

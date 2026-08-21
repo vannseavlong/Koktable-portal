@@ -1,11 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
 import { CircleCheck } from 'lucide-react'
-import { ConfigDrawer } from '@/components/config-drawer'
-import { Header } from '@/components/layout/header'
-import { Main } from '@/components/layout/main'
-import { ProfileDropdown } from '@/components/profile-dropdown'
-import { Search } from '@/components/search'
-import { ThemeSwitch } from '@/components/theme-switch'
 import { Badge } from '@/components/ui/badge'
 import {
   Card,
@@ -14,6 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { ConfigDrawer } from '@/components/config-drawer'
+import { Header } from '@/components/layout/header'
+import { Main } from '@/components/layout/main'
+import { ProfileDropdown } from '@/components/profile-dropdown'
+import { Search } from '@/components/search'
+import { ThemeSwitch } from '@/components/theme-switch'
 import {
   statusLabels,
   tierLabels,
@@ -25,8 +25,7 @@ const statusStyles: Record<SubscriptionStatus, string> = {
   trialing:
     'bg-amber-100/40 text-amber-900 dark:text-amber-200 border-amber-300',
   active: 'bg-teal-100/30 text-teal-900 dark:text-teal-200 border-teal-200',
-  past_due:
-    'bg-red-100/40 text-red-900 dark:text-red-200 border-red-300',
+  past_due: 'bg-red-100/40 text-red-900 dark:text-red-200 border-red-300',
   cancelled: 'bg-neutral-300/40 border-neutral-300',
 }
 
@@ -99,9 +98,7 @@ export function MyBilling() {
                   <CardDescription>
                     Your free Pro trial ends in{' '}
                     {daysRemaining(subscription.trial_ends_at)} day
-                    {daysRemaining(subscription.trial_ends_at) === 1
-                      ? ''
-                      : 's'}
+                    {daysRemaining(subscription.trial_ends_at) === 1 ? '' : 's'}
                     .
                   </CardDescription>
                 )}
@@ -129,7 +126,7 @@ export function MyBilling() {
                 </p>
                 <p className='text-sm text-muted-foreground'>
                   {subscription.tier === 'pro'
-                    ? "Want to change your plan? Reach out to your KokTable account contact."
+                    ? 'Want to change your plan? Reach out to your KokTable account contact.'
                     : 'Ready for unlimited locations, promoted listings, and full analytics? Reach out to your KokTable account contact to upgrade to Pro.'}
                 </p>
               </div>

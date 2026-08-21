@@ -41,8 +41,8 @@ export function MyProducts() {
           <div>
             <h2 className='text-2xl font-bold tracking-tight'>Menu</h2>
             <p className='text-muted-foreground'>
-              Manage the dishes and items your restaurant sells, with prices
-              and photos.
+              Manage the dishes and items your restaurant sells, with prices and
+              photos.
             </p>
           </div>
           <ProductsPrimaryButtons />

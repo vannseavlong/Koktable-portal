@@ -11,7 +11,11 @@ import {
   CommandItem,
   CommandList,
 } from '@/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 
 export type MultiSelectOption = {
   label: string
@@ -85,11 +89,7 @@ export function MultiSelect({
               {selected.map((value) => {
                 const option = optionByValue.get(value)
                 return (
-                  <Badge
-                    key={value}
-                    variant='secondary'
-                    className='gap-1 pe-1'
-                  >
+                  <Badge key={value} variant='secondary' className='gap-1 pe-1'>
                     {option?.icon ? `${option.icon} ` : ''}
                     {option?.label ?? value}
                     <span

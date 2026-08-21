@@ -163,7 +163,10 @@ export function RestaurantEditDialog({
     // restaurant-api.ts) fired together so "Save changes" reads as one action to the
     // merchant. Cuisines only sent when actually changed, since its endpoint is a
     // full-set replace, not a diff.
-    mutationFn: async ({ cuisines: nextCuisines, ...values }: RestaurantFormValues) => {
+    mutationFn: async ({
+      cuisines: nextCuisines,
+      ...values
+    }: RestaurantFormValues) => {
       const payload: RestaurantUpdatePayload = { ...values }
       if (logoEdit !== undefined) payload.logo = logoEdit ?? ''
       if (bannerEdit !== undefined) payload.banner = bannerEdit ?? ''

@@ -22,10 +22,7 @@ export function DataTableViewToggle({
         type='button'
         variant='ghost'
         size='icon'
-        className={cn(
-          'size-7',
-          value === 'list' && 'bg-muted hover:bg-muted'
-        )}
+        className={cn('size-7', value === 'list' && 'bg-muted hover:bg-muted')}
         aria-pressed={value === 'list'}
         aria-label='List view'
         onClick={() => onChange('list')}
@@ -36,10 +33,7 @@ export function DataTableViewToggle({
         type='button'
         variant='ghost'
         size='icon'
-        className={cn(
-          'size-7',
-          value === 'grid' && 'bg-muted hover:bg-muted'
-        )}
+        className={cn('size-7', value === 'grid' && 'bg-muted hover:bg-muted')}
         aria-pressed={value === 'grid'}
         aria-label='Grid view'
         onClick={() => onChange('grid')}

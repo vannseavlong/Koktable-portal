@@ -52,8 +52,10 @@ function SubscriptionEditor({ restaurant }: { restaurant: Restaurant }) {
   const status = subscription?.status ?? 'trialing'
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (payload: { tier?: SubscriptionTier; status?: SubscriptionStatus }) =>
-      updateRestaurantSubscription(restaurant.restaurant_id, payload),
+    mutationFn: (payload: {
+      tier?: SubscriptionTier
+      status?: SubscriptionStatus
+    }) => updateRestaurantSubscription(restaurant.restaurant_id, payload),
     onSuccess: ({ subscription: updated }) => {
       toast.success('Subscription updated.')
       const next = { ...restaurant, subscription: updated }

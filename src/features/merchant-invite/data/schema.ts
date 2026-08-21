@@ -9,6 +9,7 @@ export const merchantInviteInfoSchema = z.object({
   }),
   email: z.string(),
   expires_at: z.string(),
+  account_exists: z.boolean(),
 })
 export type MerchantInviteInfo = z.infer<typeof merchantInviteInfoSchema>
 

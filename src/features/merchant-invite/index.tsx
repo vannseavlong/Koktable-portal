@@ -87,6 +87,26 @@ export function MerchantInviteAccept() {
 
   if (!data) return null
 
+  // Exist ccount check
+  if (data.account_exists) {
+    return (
+      <AuthLayout>
+        <div className='space-y-4 text-center'>
+          <div className='space-y-1'>
+            <h1 className='text-2xl font-bold tracking-tight'>
+              You already have an account
+            </h1>
+            <p className='text-sm text-muted-foreground'>
+              {data.email} is already registered. Sign in instead — no need to
+              set a new password.
+            </p>
+          </div>
+          <BackToSignIn />
+        </div>
+      </AuthLayout>
+    )
+  }
+
   return (
     <AuthLayout>
       <div className='space-y-1'>

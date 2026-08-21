@@ -23,10 +23,29 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { DataTablePagination, DataTableToolbar } from '@/components/data-table'
+import {
+  DataTablePagination,
+  DataTableToolbar,
+  DataTableViewToggle,
+  type DataTableViewMode,
+} from '@/components/data-table'
 import { updateProduct } from '../data/products-api'
 import { type Product } from '../data/schema'
 import { createProductsColumns } from './products-columns'
+import { ProductsGrid } from './products-grid'
+
+// Remembered per browser, not per account — same tradeoff as any other purely
+// cosmetic UI preference in this app (e.g. column visibility isn't persisted either).
+const VIEW_MODE_STORAGE_KEY = 'my-menu-view-mode'
+
+function loadViewMode(): DataTableViewMode {
+  try {
+    const stored = localStorage.getItem(VIEW_MODE_STORAGE_KEY)
+    return stored === 'grid' ? 'grid' : 'list'
+  } catch {
+    return 'list'
+  }
+}
 
 type DataTableProps = {
   data: Product[]
@@ -36,6 +55,7 @@ type DataTableProps = {
 
 export function ProductsTable({ data, search, navigate }: DataTableProps) {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})
+  const [viewMode, setViewMode] = useState<DataTableViewMode>(loadViewMode)
   const queryClient = useQueryClient()
   const { categories } = useCategories()
   const categoryNameById = useMemo(
@@ -121,6 +141,16 @@ export function ProductsTable({ data, search, navigate }: DataTableProps) {
     value: c.category_id,
   }))
 
+  function handleViewModeChange(mode: DataTableViewMode) {
+    setViewMode(mode)
+    try {
+      localStorage.setItem(VIEW_MODE_STORAGE_KEY, mode)
+    } catch {
+      // Best-effort only — a private window or blocked storage just means the
+      // preference doesn't stick across reloads, not a broken page.
+    }
+  }
+
   return (
     <div className={cn('flex flex-1 flex-col gap-4')}>
       <DataTableToolbar
@@ -141,65 +171,80 @@ export function ProductsTable({ data, search, navigate }: DataTableProps) {
             ],
           },
         ]}
+        viewToggle={
+          <DataTableViewToggle
+            value={viewMode}
+            onChange={handleViewModeChange}
+          />
+        }
       />
-      <div className='overflow-hidden rounded-md border'>
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id} className='group/row'>
-                {headerGroup.headers.map((header) => (
-                  <TableHead
-                    key={header.id}
-                    colSpan={header.colSpan}
-                    className={cn(
-                      'bg-background group-hover/row:bg-muted',
-                      header.column.columnDef.meta?.className
-                    )}
-                  >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                ))}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id} className='group/row'>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell
-                      key={cell.id}
+      {viewMode === 'grid' ? (
+        <ProductsGrid
+          rows={table.getRowModel().rows}
+          categoryNameById={categoryNameById}
+          onToggleActive={(item) => toggleActiveMutation.mutate(item)}
+          isToggling={toggleActiveMutation.isPending}
+        />
+      ) : (
+        <div className='overflow-hidden rounded-md border'>
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id} className='group/row'>
+                  {headerGroup.headers.map((header) => (
+                    <TableHead
+                      key={header.id}
+                      colSpan={header.colSpan}
                       className={cn(
                         'bg-background group-hover/row:bg-muted',
-                        cell.column.columnDef.meta?.className
+                        header.column.columnDef.meta?.className
                       )}
                     >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                    </TableHead>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className='h-24 text-center'
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow key={row.id} className='group/row'>
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell
+                        key={cell.id}
+                        className={cn(
+                          'bg-background group-hover/row:bg-muted',
+                          cell.column.columnDef.meta?.className
+                        )}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className='h-24 text-center'
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+      )}
       <DataTablePagination table={table} className='mt-auto' />
     </div>
   )

@@ -23,6 +23,7 @@ export function AppSidebar() {
         name: authUser.full_name,
         email: authUser.email,
         avatar: authUser.picture ?? '',
+        role: authUser.role,
       }
     : sidebarData.user
 

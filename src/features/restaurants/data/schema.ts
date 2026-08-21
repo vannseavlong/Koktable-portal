@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { locationSchema } from './location-schema'
+import { subscriptionSchema } from './subscription-schema'
 
 const restaurantStatusSchema = z.union([
   z.literal('pending'),
@@ -19,6 +20,7 @@ const _restaurantSchema = z.object({
   status: restaurantStatusSchema,
   locations: z.array(locationSchema).optional(),
   cuisines: z.array(z.string()).optional(),
+  subscription: subscriptionSchema.nullable().optional(),
 })
 export type Restaurant = z.infer<typeof _restaurantSchema>
 

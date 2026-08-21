@@ -48,7 +48,7 @@ export function ProductsDeleteDialog({
             className='me-1 inline-block stroke-destructive'
             size={18}
           />{' '}
-          Permanently Delete Product
+          Permanently Delete Menu Item
         </span>
       }
       desc={

@@ -3,7 +3,7 @@ import {
   LayoutGrid,
   ClipboardList,
   ClipboardCheck,
-  Package,
+  CreditCard,
   PawPrint,
   Tag,
   Users,
@@ -13,6 +13,7 @@ import {
   Settings,
   UserCog,
   Utensils,
+  UtensilsCrossed,
   Wrench,
   Command,
 } from 'lucide-react'
@@ -132,11 +133,13 @@ const adminSidebarData: SidebarData = {
 
 // Merchant nav — scoped to the merchant-facing pages (`/merchant/restaurant` → My
 // Restaurant, `/merchant/catalog-items` filtered to services → My Catalog and to
-// products → My Products, `/merchant/orders` → My Orders) plus the generic
-// Settings group. No Dashboard: the existing Dashboard page is
-// built entirely from admin-only stats (`/admin/reservations`, `/admin/services`,
-// `/admin/users`), so there's nothing on it a merchant account could load —
-// dropped rather than shown empty/erroring.
+// products → Menu (route/feature folder still say "my-products"/"Product" internally —
+// only the label changed; see my-products/ for the full rename note), `/merchant/orders`
+// → My Orders, `/merchant/restaurant/subscription` (read-only) → Billing) plus the
+// generic Settings group. No Dashboard: the existing Dashboard page is built entirely
+// from admin-only stats (`/admin/reservations`, `/admin/services`, `/admin/users`), so
+// there's nothing on it a merchant account could load — dropped rather than shown
+// empty/erroring.
 const merchantSidebarData: SidebarData = {
   ...baseSidebarData,
   navGroups: [
@@ -154,9 +157,9 @@ const merchantSidebarData: SidebarData = {
           icon: PawPrint,
         },
         {
-          title: 'My Products',
+          title: 'Menu',
           url: '/my-products',
-          icon: Package,
+          icon: UtensilsCrossed,
         },
         {
           title: 'Floor Plan',
@@ -167,6 +170,11 @@ const merchantSidebarData: SidebarData = {
           title: 'My Orders',
           url: '/my-orders',
           icon: ClipboardList,
+        },
+        {
+          title: 'Billing',
+          url: '/my-billing',
+          icon: CreditCard,
         },
       ],
     },

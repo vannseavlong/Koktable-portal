@@ -18,6 +18,10 @@ type DataTableToolbarProps<TData> = {
       icon?: React.ComponentType<{ className?: string }>
     }[]
   }[]
+  // Optional list/grid switcher (see DataTableViewToggle) — rendered before the
+  // column-visibility dropdown. Omitted entirely for tables that don't offer a
+  // grid layout.
+  viewToggle?: React.ReactNode
 }
 
 export function DataTableToolbar<TData>({
@@ -25,6 +29,7 @@ export function DataTableToolbar<TData>({
   searchPlaceholder = 'Filter...',
   searchKey,
   filters = [],
+  viewToggle,
 }: DataTableToolbarProps<TData>) {
   const isFiltered =
     table.getState().columnFilters.length > 0 || table.getState().globalFilter
@@ -79,7 +84,10 @@ export function DataTableToolbar<TData>({
           </Button>
         )}
       </div>
-      <DataTableViewOptions table={table} />
+      <div className='flex items-center gap-2'>
+        {viewToggle}
+        <DataTableViewOptions table={table} />
+      </div>
     </div>
   )
 }

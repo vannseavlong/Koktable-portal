@@ -6,7 +6,6 @@ import {
   Phone,
   SquarePen,
   Store,
-  Utensils,
 } from 'lucide-react'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -48,17 +47,16 @@ type RestaurantProfilePreviewProps = {
   onEdit: () => void
   onEditHours: () => void
   onEditLocation: () => void
-  onEditCuisines: () => void
 }
 
 // Read-only storefront-style header — the counterpart to the always-editable
-// form this page used to render. Edit opens `RestaurantEditDialog` instead.
+// form this page used to render. Edit opens `RestaurantEditDialog` instead
+// (cuisines are edited there too now, inline — no separate "Edit cuisines" action).
 export function RestaurantProfilePreview({
   restaurant,
   onEdit,
   onEditHours,
   onEditLocation,
-  onEditCuisines,
 }: RestaurantProfilePreviewProps) {
   const today = restaurant.hours.find(
     (d) => d.day_of_week === jsDayToDayOfWeek[new Date().getDay()]
@@ -94,9 +92,6 @@ export function RestaurantProfilePreview({
             <DropdownMenuItem onClick={onEditLocation}>
               <MapPin /> Edit location
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={onEditCuisines}>
-              <Utensils /> Edit cuisines
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -129,6 +124,16 @@ export function RestaurantProfilePreview({
             <p className='max-w-2xl text-muted-foreground'>
               {restaurant.description}
             </p>
+          )}
+
+          {restaurant.cuisines.length > 0 && (
+            <div className='flex flex-wrap gap-1.5'>
+              {restaurant.cuisines.map((cuisine) => (
+                <Badge key={cuisine} variant='outline'>
+                  {cuisine}
+                </Badge>
+              ))}
+            </div>
           )}
 
           <div className='flex flex-col gap-2 text-sm sm:flex-row sm:flex-wrap sm:gap-6'>

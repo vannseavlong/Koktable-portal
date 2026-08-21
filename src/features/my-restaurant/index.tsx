@@ -6,7 +6,6 @@ import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { RestaurantCuisinesDialog } from './components/restaurant-cuisines-dialog'
 import { RestaurantEditDialog } from './components/restaurant-edit-dialog'
 import { RestaurantHoursDialog } from './components/restaurant-hours-dialog'
 import { RestaurantLocationDialog } from './components/restaurant-location-dialog'
@@ -17,7 +16,6 @@ export function MyRestaurant() {
   const [editOpen, setEditOpen] = useState(false)
   const [hoursOpen, setHoursOpen] = useState(false)
   const [locationOpen, setLocationOpen] = useState(false)
-  const [cuisinesOpen, setCuisinesOpen] = useState(false)
   // Bumped on every Edit click to force a fresh `RestaurantEditDialog` mount (fresh
   // form/image state from the current `restaurant`, no stale edits from last time).
   const [editKey, setEditKey] = useState(0)
@@ -61,7 +59,6 @@ export function MyRestaurant() {
               }}
               onEditHours={() => setHoursOpen(true)}
               onEditLocation={() => setLocationOpen(true)}
-              onEditCuisines={() => setCuisinesOpen(true)}
             />
             <RestaurantEditDialog
               key={editKey}
@@ -78,11 +75,6 @@ export function MyRestaurant() {
               restaurant={data.restaurant}
               open={locationOpen}
               onOpenChange={setLocationOpen}
-            />
-            <RestaurantCuisinesDialog
-              restaurant={data.restaurant}
-              open={cuisinesOpen}
-              onOpenChange={setCuisinesOpen}
             />
           </>
         )}

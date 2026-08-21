@@ -7,7 +7,7 @@ export function ProductsPrimaryButtons() {
   return (
     <div className='flex gap-2'>
       <Button className='space-x-1' onClick={() => setOpen('create')}>
-        <span>Add Product</span> <Plus size={18} />
+        <span>Add Item</span> <Plus size={18} />
       </Button>
     </div>
   )

@@ -1,5 +1,5 @@
 import { type ColumnDef } from '@tanstack/react-table'
-import { Package } from 'lucide-react'
+import { ImageIcon } from 'lucide-react'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { Switch } from '@/components/ui/switch'
 import { DataTableColumnHeader } from '@/components/data-table'
@@ -30,7 +30,7 @@ export function createProductsColumns({
             {image ? (
               <img src={image} alt='' className='h-full w-full object-cover' />
             ) : (
-              <Package className='size-4 text-muted-foreground' />
+              <ImageIcon className='size-4 text-muted-foreground' />
             )}
           </div>
         )

@@ -5,6 +5,11 @@ import {
   type RestaurantStatus,
   type RestaurantsListResponse,
 } from './schema'
+import {
+  type Subscription,
+  type SubscriptionStatus,
+  type SubscriptionTier,
+} from './subscription-schema'
 
 export type RestaurantFilters = {
   status?: RestaurantStatus
@@ -62,6 +67,16 @@ export function updateRestaurantLocation(
 ) {
   return apiClient.patch<{ location: Location }>(
     `/admin/restaurants/${restaurantId}/locations/${locationId}`,
+    payload
+  )
+}
+
+export function updateRestaurantSubscription(
+  restaurantId: string,
+  payload: { tier?: SubscriptionTier; status?: SubscriptionStatus }
+) {
+  return apiClient.patch<{ subscription: Subscription }>(
+    `/admin/restaurants/${restaurantId}/subscription`,
     payload
   )
 }

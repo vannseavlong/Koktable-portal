@@ -8,7 +8,7 @@ import { toast } from 'sonner'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { handleServerError } from '@/lib/handle-server-error'
 import { cn } from '@/lib/utils'
-import { useCategories } from '@/hooks/use-categories'
+import { useCuisines } from '@/hooks/use-cuisines'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -27,16 +27,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { MultiSelect } from '@/components/ui/multi-select'
 import { Textarea } from '@/components/ui/textarea'
 import {
   updateMyRestaurant,
+  updateMyRestaurantCuisines,
   type RestaurantUpdatePayload,
 } from '../data/restaurant-api'
 import { type Restaurant } from '../data/schema'
@@ -44,18 +39,30 @@ import { type Restaurant } from '../data/schema'
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required.'),
   description: z.string().optional(),
-  category_id: z.string().optional(),
+  // Not .optional()/.default() — toFormValues() below always supplies a concrete
+  // array, and mixing zod's input/output split with useForm's single type param
+  // (unlike products-mutate-dialog.tsx's two-generic ProductFormInput/ProductForm
+  // pattern) breaks resolver typing otherwise.
+  cuisines: z.array(z.string()),
 })
 type RestaurantFormValues = z.infer<typeof formSchema>
 
 // undefined = unchanged, null = cleared, File = a newly picked file to upload.
 type ImageEdit = File | null | undefined
 
+// Order-insensitive: MultiSelect appends in click order, which won't generally match
+// the order `restaurant.cuisines` came back in from the server.
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length !== b.length) return false
+  const bSet = new Set(b)
+  return a.every((v) => bSet.has(v))
+}
+
 function toFormValues(restaurant: Restaurant): RestaurantFormValues {
   return {
     name: restaurant.name,
     description: restaurant.description ?? '',
-    category_id: restaurant.category_id ?? '',
+    cuisines: restaurant.cuisines,
   }
 }
 
@@ -141,7 +148,7 @@ export function RestaurantEditDialog({
   onOpenChange,
 }: RestaurantEditDialogProps) {
   const queryClient = useQueryClient()
-  const { categories } = useCategories()
+  const { cuisines, isLoading: cuisinesLoading } = useCuisines()
   const [logoEdit, setLogoEdit] = useState<ImageEdit>(undefined)
   const [bannerEdit, setBannerEdit] = useState<ImageEdit>(undefined)
 
@@ -151,11 +158,23 @@ export function RestaurantEditDialog({
   })
 
   const { mutate, isPending } = useMutation({
-    mutationFn: (values: RestaurantFormValues) => {
+    // Two separate endpoints under the hood (PATCH /merchant/restaurant for profile
+    // fields, PUT /merchant/restaurant/cuisines for the replace-all cuisine set — see
+    // restaurant-api.ts) fired together so "Save changes" reads as one action to the
+    // merchant. Cuisines only sent when actually changed, since its endpoint is a
+    // full-set replace, not a diff.
+    mutationFn: async ({ cuisines: nextCuisines, ...values }: RestaurantFormValues) => {
       const payload: RestaurantUpdatePayload = { ...values }
       if (logoEdit !== undefined) payload.logo = logoEdit ?? ''
       if (bannerEdit !== undefined) payload.banner = bannerEdit ?? ''
-      return updateMyRestaurant(payload)
+
+      const [{ restaurant: updated }] = await Promise.all([
+        updateMyRestaurant(payload),
+        arraysEqual(nextCuisines ?? [], restaurant.cuisines)
+          ? Promise.resolve(null)
+          : updateMyRestaurantCuisines(nextCuisines ?? []),
+      ])
+      return { restaurant: { ...updated, cuisines: nextCuisines ?? [] } }
     },
     onSuccess: (data) => {
       toast.success('Restaurant details updated.')
@@ -238,28 +257,29 @@ export function RestaurantEditDialog({
 
               <FormField
                 control={form.control}
-                name='category_id'
+                name='cuisines'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Category</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger className='w-full'>
-                          <SelectValue placeholder='Select a category' />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {categories.map((category) => (
-                          <SelectItem
-                            key={category.category_id}
-                            value={category.category_id}
-                          >
-                            {category.icon ? `${category.icon} ` : ''}
-                            {category.name}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                    <FormLabel>Cuisines</FormLabel>
+                    <FormControl>
+                      <MultiSelect
+                        options={cuisines.map((c) => ({
+                          label: c.name,
+                          value: c.name,
+                          icon: c.icon,
+                        }))}
+                        selected={field.value ?? []}
+                        onChange={field.onChange}
+                        disabled={cuisinesLoading}
+                        placeholder={
+                          cuisinesLoading
+                            ? 'Loading cuisines…'
+                            : 'Select cuisines...'
+                        }
+                        searchPlaceholder='Search cuisines...'
+                        emptyText='No cuisines found.'
+                      />
+                    </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}

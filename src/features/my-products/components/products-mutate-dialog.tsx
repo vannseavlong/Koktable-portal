@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { ImagePlus, PawPrint, X } from 'lucide-react'
+import { ImageIcon, ImagePlus, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { toDisplayImageUrl } from '@/lib/drive-image'
 import { handleServerError } from '@/lib/handle-server-error'
@@ -106,7 +106,7 @@ export function ProductsMutateDialog({
         : createProduct(payload)
     },
     onSuccess: () => {
-      toast.success(isEdit ? 'Product updated.' : 'Product created.')
+      toast.success(isEdit ? 'Menu item updated.' : 'Menu item added.')
       queryClient.invalidateQueries({ queryKey: ['my-products'] })
       form.reset()
       setImageEdit(undefined)
@@ -131,12 +131,12 @@ export function ProductsMutateDialog({
       <DialogContent className='sm:max-w-lg'>
         <DialogHeader className='text-start'>
           <DialogTitle>
-            {isEdit ? 'Edit Product' : 'Add New Product'}
+            {isEdit ? 'Edit Menu Item' : 'Add New Menu Item'}
           </DialogTitle>
           <DialogDescription>
             {isEdit
-              ? 'Update this item here.'
-              : 'Add merchandise, ingredients, or other physical item your restaurant sells.'}{' '}
+              ? 'Update this menu item here.'
+              : 'Add a dish or item to your menu, with a price and photo.'}{' '}
             Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
@@ -156,7 +156,7 @@ export function ProductsMutateDialog({
                       className='h-full w-full object-cover'
                     />
                   ) : (
-                    <PawPrint className='size-8 text-muted-foreground' />
+                    <ImageIcon className='size-8 text-muted-foreground' />
                   )}
                 </div>
                 <div className='flex flex-col items-start gap-1'>
@@ -208,7 +208,7 @@ export function ProductsMutateDialog({
                     <FormLabel className='col-span-2 text-end'>Name</FormLabel>
                     <FormControl>
                       <Input
-                        placeholder='Golden Retriever Puppy'
+                        placeholder='Grilled Chicken'
                         className='col-span-4'
                         autoComplete='off'
                         {...field}
@@ -228,7 +228,7 @@ export function ProductsMutateDialog({
                     </FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder='8 weeks old, vaccinated, microchipped.'
+                        placeholder='Grilled chicken breast served with rice and vegetables.'
                         className='col-span-4 resize-none'
                         {...field}
                       />
